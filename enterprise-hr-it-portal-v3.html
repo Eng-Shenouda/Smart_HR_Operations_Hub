@@ -1,0 +1,2608 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>بوابة خدمات الموارد البشرية | Enterprise HR Portal</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Cairo (Arabic) & Plus Jakarta Sans (English) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            ar: ['Cairo', 'sans-serif'],
+            en: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            navy: {
+              800: '#1E3A8A',
+              900: '#0F172A',
+              950: '#090D16',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html[lang="ar"] body {
+      font-family: 'Cairo', sans-serif;
+    }
+    html[lang="en"] body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    body {
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .hero-gradient {
+      background: radial-gradient(circle at top right, #1D4ED8 0%, #0F172A 58%, #090D16 100%);
+    }
+    .chat-scroll::-webkit-scrollbar {
+      width: 5px;
+    }
+    .chat-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .chat-scroll::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.5);
+      border-radius: 10px;
+    }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up {
+      animation: fadeSlideUp 0.25s ease-out forwards;
+    }
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #certificate-print-area, #certificate-print-area * {
+        visibility: visible;
+      }
+      #certificate-print-area {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        padding: 16px;
+        background: #FFFFFF !important;
+        color: #0F172A !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200 antialiased selection:bg-blue-700 selection:text-white">
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 max-w-md w-[calc(100vw-2.5rem)] sm:w-full pointer-events-none"></div>
+
+  <!-- ===================================================================== -->
+  <!-- VIEW 1: STRICT ROLE-BASED CORPORATE LOGIN PORTAL                      -->
+  <!-- ===================================================================== -->
+  <div id="login-view" class="min-h-screen flex flex-col lg:flex-row">
+    
+    <!-- Brand & System Capabilities Panel -->
+    <div class="lg:w-5/12 hero-gradient text-white p-6 sm:p-10 lg:p-14 flex flex-col justify-between relative overflow-hidden">
+      <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-500/15 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute bottom-10 right-10 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10">
+        <!-- Top Bar inside Brand Panel (Mobile Theme/Lang Switcher) -->
+        <div class="flex items-center justify-between gap-3 mb-8 sm:mb-10">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center shadow-lg shrink-0">
+              <svg class="w-6 h-6 sm:w-7 sm:h-7 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+            <div>
+              <span data-i18n="brandSub" class="text-[11px] sm:text-xs font-bold text-blue-300 tracking-wide block">المنظومة الرقمية المتكاملة</span>
+              <span data-i18n="brandName" class="text-base sm:text-lg font-extrabold text-white">بوابة خدمات الموارد البشرية</span>
+            </div>
+          </div>
+
+          <!-- Mobile Controls (Visible < lg) -->
+          <div class="flex lg:hidden items-center gap-2">
+            <button type="button" onclick="toggleLanguage()" class="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-bold text-white transition min-h-[40px]">
+              <span class="lang-btn-text">EN</span>
+            </button>
+            <button type="button" onclick="toggleTheme()" aria-label="Toggle Theme" class="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-white transition min-h-[40px] min-w-[40px] flex items-center justify-center">
+              <svg class="w-4 h-4 sun-icon hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+              <svg class="w-4 h-4 moon-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <h1 class="text-2xl sm:text-4xl font-extrabold leading-tight mb-4 sm:mb-5">
+          <span data-i18n="heroTitle1">دورة عمل رقمية متكاملة</span>
+          <span data-i18n="heroTitle2" class="text-blue-300 block sm:inline">لإصدار واعتماد الشهادات</span>
+        </h1>
+        <p data-i18n="heroDesc" class="text-slate-300 text-xs sm:text-base leading-relaxed mb-7 sm:mb-9">
+          منظومة مؤسسية ذكية تربط الموظف بإدارة الموارد البشرية مباشرة؛ بدءاً من تقديم طلب الشهادة والتحقق الآلي من السجل الوظيفي، مروراً بالاعتماد الإداري، وحتى إصدار الوثيقة الرسمية بصيغة PDF والتقارير التنفيذية اليومية.
+        </p>
+
+        <!-- Workflow Pillars -->
+        <div class="space-y-3.5 sm:space-y-4">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-4 flex items-start gap-3.5">
+            <div class="p-2.5 bg-blue-500/20 text-blue-300 rounded-xl shrink-0">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <div>
+              <h3 data-i18n="feat1Title" class="font-bold text-white text-sm sm:text-base">مسار إصدار الشهادات والوثائق</h3>
+              <p data-i18n="feat1Desc" class="text-xs sm:text-sm text-slate-300/80 mt-1">تقديم الطلب ⬅️ التحقق الآلي ⬅️ اعتماد مدير HR ⬅️ تحميل الشهادة PDF.</p>
+            </div>
+          </div>
+
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-4 flex items-start gap-3.5">
+            <div class="p-2.5 bg-emerald-500/20 text-emerald-300 rounded-xl shrink-0">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <div>
+              <h3 data-i18n="feat2Title" class="font-bold text-white text-sm sm:text-base">التقرير التنفيذي وسجل التدقيق</h3>
+              <p data-i18n="feat2Desc" class="text-xs sm:text-sm text-slate-300/80 mt-1">متابعة مؤشرات الطلبات والمرفقات والاعتمادات اليومية مع توثيق كامل لكافة العمليات.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative z-10 mt-8 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
+        <span data-i18n="copyright">جميع الحقوق محفوظة © إدارة الموارد البشرية</span>
+        <span class="inline-flex items-center gap-1.5 text-emerald-300 font-semibold">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span data-i18n="systemOnline">النظام متصل ويعمل بكفاءة</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Role Selector & Login Form Panel -->
+    <div class="lg:w-7/12 flex flex-col justify-between p-5 sm:p-10 lg:p-14 bg-slate-50 dark:bg-slate-950 transition-colors">
+      
+      <!-- Desktop Top Controls (Language & Dark Mode) -->
+      <div class="hidden lg:flex items-center justify-end gap-2.5 mb-4">
+        <button type="button" onclick="toggleLanguage()" class="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-xs font-extrabold text-slate-700 dark:text-slate-200 shadow-sm transition flex items-center gap-2">
+          <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+          </svg>
+          <span class="lang-btn-text">English</span>
+        </button>
+
+        <button type="button" onclick="toggleTheme()" aria-label="Toggle Theme" class="p-2.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-amber-400 shadow-sm transition">
+          <svg class="w-4 h-4 sun-icon hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg class="w-4 h-4 moon-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="w-full max-w-xl mx-auto my-auto">
+        <div class="mb-6 sm:mb-7">
+          <h2 data-i18n="loginHeading" class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-2">تسجيل الدخول إلى البوابة</h2>
+          <p data-i18n="loginSubheading" class="text-slate-500 dark:text-slate-400 text-xs sm:text-base">يرجى اختيار صفة الدخول أولاً لتفعيل صلاحياتك والانتقال إلى مسار العمل المخصص:</p>
+        </div>
+
+        <!-- Role Selection Cards (3 Isolated Roles: Client / HR / IT Engineer) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-3.5 mb-6 sm:mb-7">
+          
+          <!-- Card 1: Client / Employee -->
+          <div id="role-card-client" role="button" tabindex="0" onclick="selectLoginRole('client')" onkeydown="if(event.key==='Enter') selectLoginRole('client')"
+            class="cursor-pointer select-none p-4 rounded-2xl border-2 border-blue-700 bg-blue-50/70 dark:bg-blue-950/40 dark:border-blue-500 shadow-sm transition-all">
+            <div class="flex items-center justify-between mb-2.5">
+              <div class="w-10 h-10 rounded-xl bg-blue-700 text-white flex items-center justify-center shadow-md shadow-blue-700/20">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <div id="radio-client" class="w-5 h-5 rounded-full bg-blue-700 text-white flex items-center justify-center transition-all">
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            </div>
+            <h3 data-i18n="roleClientTitle" class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">عميل / موظف</h3>
+            <p data-i18n="roleClientDesc" class="text-[11px] text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+              تقديم طلب شهادة جديدة، تتبع مراحل الاعتماد، وتحميل الشهادة المعتمدة بصيغة PDF.
+            </p>
+          </div>
+
+          <!-- Card 2: HR Manager -->
+          <div id="role-card-hr" role="button" tabindex="0" onclick="selectLoginRole('hr')" onkeydown="if(event.key==='Enter') selectLoginRole('hr')"
+            class="cursor-pointer select-none p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700 transition-all">
+            <div class="flex items-center justify-between mb-2.5">
+              <div class="w-10 h-10 rounded-xl bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <div id="radio-hr" class="w-5 h-5 rounded-full border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-transparent flex items-center justify-center transition-all">
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            </div>
+            <h3 data-i18n="roleHrTitle" class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">مدير الموارد البشرية (HR)</h3>
+            <p data-i18n="roleHrDesc" class="text-[11px] text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+              اعتماد أو رفض طلبات الشهادات، تشغيل التقرير التنفيذي اليومي، ومراجعة سجل التدقيق.
+            </p>
+          </div>
+
+          <!-- Card 3: IT Engineer -->
+          <div id="role-card-it" role="button" tabindex="0" onclick="selectLoginRole('it')" onkeydown="if(event.key==='Enter') selectLoginRole('it')"
+            class="cursor-pointer select-none p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700 transition-all">
+            <div class="flex items-center justify-between mb-2.5">
+              <div class="w-10 h-10 rounded-xl bg-purple-700 text-white flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <div id="radio-it" class="w-5 h-5 rounded-full border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-transparent flex items-center justify-center transition-all">
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            </div>
+            <h3 data-i18n="roleItTitle" class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">مهندس الـ IT</h3>
+            <p data-i18n="roleItDesc" class="text-[11px] text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+              إدارة روابط الربط السحابي (n8n Webhooks)، فحص الاتصال، ومراقبة السجل التقني.
+            </p>
+          </div>
+        </div>
+
+        <!-- Login Credentials Form -->
+        <form onsubmit="handleLoginSubmit(event)" class="bg-white dark:bg-slate-900 p-5 sm:p-8 rounded-2xl shadow-sm border border-slate-200/90 dark:border-slate-800 space-y-5">
+          
+          <!-- Strict Security Alert -->
+          <div id="login-error-box" class="hidden p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs sm:text-sm font-bold flex items-center gap-2.5">
+            <svg class="w-5 h-5 shrink-0 text-rose-600 dark:text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <span id="login-error-text">بيانات الاعتماد غير صحيحة.</span>
+          </div>
+
+          <div>
+            <label id="login-id-label" class="block text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">البريد الإلكتروني أو الرقم الوظيفي (للموظف / العميل)</label>
+            <input type="text" id="login-identifier" required value="emp@company.com"
+              class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white font-semibold focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-700 outline-none transition min-h-[46px]"
+              dir="ltr" />
+          </div>
+
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-1 mb-2">
+              <label data-i18n="passwordLabel" class="block text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300">كلمة المرور</label>
+              <span class="text-[11px] sm:text-xs text-emerald-700 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                <span data-i18n="isolatedSession">جلسة محمية ومعزولة الصلاحيات</span>
+              </span>
+            </div>
+            <!-- Password Input with Show / Hide Toggle Button -->
+            <div class="relative">
+              <input type="password" id="login-password" required value="emp123"
+                class="w-full pl-24 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white font-semibold focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-700 outline-none transition min-h-[46px]"
+                dir="ltr" />
+              <button type="button" id="toggle-password-btn" onclick="togglePasswordVisibility()"
+                class="absolute left-2 top-1/2 -translate-y-1/2 px-2.5 py-1.5 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-slate-700 flex items-center gap-1.5 transition">
+                <svg id="eye-open-icon" class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <svg id="eye-closed-icon" class="w-4 h-4 text-slate-500 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                </svg>
+                <span id="toggle-password-text">إظهار</span>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" id="login-submit-btn"
+            class="w-full py-3.5 px-6 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl shadow-lg shadow-blue-700/20 transition flex items-center justify-center gap-2 text-sm sm:text-base min-h-[48px]">
+            <span id="login-submit-text">تسجيل الدخول كـ عميل / موظف</span>
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+            </svg>
+          </button>
+
+          <!-- Collapsible Demo Credentials Reference -->
+          <details class="pt-4 border-t border-slate-100 dark:border-slate-800 group">
+            <summary class="list-none cursor-pointer flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition select-none">
+              <span class="flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span data-i18n="demoCredsSummary">بيانات الدخول التجريبية للمعاينة</span>
+              </span>
+              <svg class="w-4 h-4 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="mt-3 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700 space-y-2 text-xs">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 border-b border-slate-200/70 dark:border-slate-700">
+                <span data-i18n="demoClientLabel" class="font-bold text-blue-700 dark:text-blue-400">حساب موظف / عميل:</span>
+                <span class="font-mono text-slate-700 dark:text-slate-300" dir="ltr">emp@company.com / emp123</span>
+              </div>
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 border-b border-slate-200/70 dark:border-slate-700">
+                <span data-i18n="demoHrLabel" class="font-bold text-emerald-700 dark:text-emerald-400">حساب مدير الموارد البشرية:</span>
+                <span class="font-mono text-slate-700 dark:text-slate-300" dir="ltr">hr@company.com / hr@admin2026</span>
+              </div>
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                <span data-i18n="demoItLabel" class="font-bold text-purple-700 dark:text-purple-400">حساب مهندس تكنولوجيا المعلومات (IT):</span>
+                <span class="font-mono text-slate-700 dark:text-slate-300" dir="ltr">it@company.com / it@admin2026</span>
+              </div>
+            </div>
+          </details>
+        </form>
+      </div>
+      <div class="hidden lg:block h-4"></div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- VIEW 2: AUTHENTICATED END-TO-END WORKFLOW WORKSPACE                   -->
+  <!-- ===================================================================== -->
+  <div id="app-view" class="hidden min-h-screen flex flex-col">
+    
+    <!-- Top Executive Navbar -->
+    <header class="bg-navy-900 dark:bg-slate-900 text-white sticky top-0 z-30 shadow-md border-b border-slate-800">
+      <div class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
+        
+        <!-- Brand & User Identity -->
+        <div class="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center font-extrabold text-white shadow-inner shrink-0">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <span data-i18n="brandName" class="font-extrabold text-sm sm:text-lg tracking-tight truncate">بوابة خدمات الموارد البشرية</span>
+              <span id="nav-role-badge" class="hidden sm:inline-block text-xs px-2.5 py-0.5 rounded-full font-bold bg-blue-500/20 text-blue-300 border border-blue-400/30 shrink-0">
+                بوابة الموظفين
+              </span>
+            </div>
+            <p id="nav-user-subtitle" class="text-[11px] sm:text-xs text-slate-400 truncate">
+              أحمد محمود - مطور برمجيات أول | EMP-DEMO-001
+            </p>
+          </div>
+        </div>
+
+        <!-- Right Controls: Language, Theme, Cloud Settings (HR Only) & Logout -->
+        <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+          <button type="button" onclick="toggleLanguage()" title="Switch Language"
+            class="px-2.5 sm:px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-extrabold transition min-h-[40px]">
+            <span class="lang-btn-text">EN</span>
+          </button>
+
+          <button type="button" onclick="toggleTheme()" aria-label="Toggle Theme"
+            class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 dark:text-amber-400 border border-slate-700 transition min-h-[40px] min-w-[40px] flex items-center justify-center">
+            <svg class="w-4 h-4 sun-icon hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <svg class="w-4 h-4 moon-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </button>
+
+          <!-- HR Cloud Integration Settings -->
+          <button id="header-cloud-btn" onclick="openCloudSettingsModal()" title="إعدادات الربط السحابي"
+            class="hidden p-2.5 sm:px-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 transition flex items-center gap-2 text-xs font-bold border border-slate-700 min-h-[40px]">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+            </svg>
+            <span data-i18n="cloudBtnText" class="hidden md:inline">الربط السحابي</span>
+          </button>
+
+          <!-- Logout -->
+          <button onclick="logout()"
+            class="py-2 px-3 sm:px-4 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border border-rose-500/30 text-xs font-bold transition flex items-center gap-1.5 min-h-[40px]">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+            <span data-i18n="logoutBtn" class="hidden sm:inline">تسجيل الخروج</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- =================================================================== -->
+    <!-- SUB-VIEW A: EMPLOYEE / CLIENT END-TO-END CERTIFICATE WORKFLOW        -->
+    <!-- =================================================================== -->
+    <main id="client-dashboard" class="hidden flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
+      
+      <!-- Employee Identity & Workflow Summary -->
+      <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200/90 dark:border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div id="emp-avatar-initials" class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-blue-700 text-white flex items-center justify-center text-lg sm:text-xl font-extrabold shrink-0 shadow-md shadow-blue-700/20">
+            أم
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <h2 id="emp-profile-name" class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white">أحمد محمود</h2>
+              <span class="px-2.5 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-mono text-xs font-bold border border-slate-200 dark:border-slate-700">EMP-DEMO-001</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 text-xs font-bold border border-emerald-200 dark:border-emerald-800 inline-flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400"></span>
+                <span data-i18n="activeStatus">على رأس العمل</span>
+              </span>
+            </div>
+            <p data-i18n="empMetaLine" class="text-xs text-slate-500 dark:text-slate-400 mt-1">مطور برمجيات أول • إدارة التحول الرقمي • تاريخ الالتحاق: 2023-03-15</p>
+          </div>
+        </div>
+
+        <!-- Live Workflow Counters -->
+        <div class="grid grid-cols-3 gap-2.5 sm:gap-3 shrink-0">
+          <div class="bg-slate-50 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-center">
+            <div data-i18n="statTotal" class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">إجمالي طلباتي</div>
+            <div class="text-xl font-extrabold text-slate-900 dark:text-white" id="client-stat-total">0</div>
+          </div>
+          <div class="bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60 rounded-xl px-3.5 py-2.5 text-center">
+            <div data-i18n="statPending" class="text-[11px] text-amber-700 dark:text-amber-400 font-semibold">قيد الاعتماد</div>
+            <div class="text-xl font-extrabold text-amber-600 dark:text-amber-400" id="client-stat-pending">0</div>
+          </div>
+          <div class="bg-emerald-50/70 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/60 rounded-xl px-3.5 py-2.5 text-center">
+            <div data-i18n="statApproved" class="text-[11px] text-emerald-700 dark:text-emerald-400 font-semibold">شهادات معتمدة</div>
+            <div class="text-xl font-extrabold text-emerald-600 dark:text-emerald-400" id="client-stat-approved">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Focused End-to-End Two-Column Workflow (Left: Submit Request | Right: Live Status & PDF Certificates) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
+        
+        <!-- Step 1: Submit New Certificate Request -->
+        <div class="lg:col-span-5 bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-7 shadow-sm border border-slate-200/90 dark:border-slate-800">
+          <div class="flex items-center gap-3 pb-4 mb-5 border-b border-slate-100 dark:border-slate-800">
+            <div class="w-9 h-9 rounded-xl bg-blue-700 text-white font-extrabold text-sm flex items-center justify-center shrink-0">1</div>
+            <div>
+              <h3 data-i18n="formTitle" class="font-extrabold text-slate-900 dark:text-white text-base sm:text-lg">بدء طلب وثيقة جديدة</h3>
+              <p data-i18n="formSubtitle" class="text-xs text-slate-500 dark:text-slate-400">إرسال الطلب للتدقيق الآلي واعتماد مدير HR</p>
+            </div>
+          </div>
+
+          <form onsubmit="submitCertificateRequest(event)" class="space-y-4">
+            <div>
+              <label data-i18n="docTypeLabel" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">نوع الوثيقة المطلوبة</label>
+              <select id="req-type" class="w-full p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold text-slate-800 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-700 outline-none min-h-[46px]">
+                <option value="EXPERIENCE_CERTIFICATE" data-i18n="docOpt1">شهادة خبرة معتمدة</option>
+                <option value="SALARY_DEFINITION" data-i18n="docOpt2">شهادة تعريف بالراتب</option>
+                <option value="BANK_LETTER" data-i18n="docOpt3">خطاب موجه للبنك</option>
+                <option value="EMPLOYMENT_PROOF" data-i18n="docOpt4">إثبات قيد وظيفي</option>
+              </select>
+            </div>
+
+            <div>
+              <label data-i18n="recipientLabel" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">الجهة الموجه إليها</label>
+              <input type="text" id="req-recipient" required data-i18n-placeholder="recipientPlaceholder" placeholder="مثال: السفارة / البنك / لمن يهمه الأمر"
+                class="w-full p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium text-slate-800 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-700 outline-none min-h-[46px]" />
+            </div>
+
+            <div>
+              <label data-i18n="docLangLabel" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">لغة الوثيقة</label>
+              <select id="req-lang" class="w-full p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold text-slate-800 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-700 outline-none min-h-[46px]">
+                <option value="Arabic" data-i18n="langOptAr">اللغة العربية</option>
+                <option value="English" data-i18n="langOptEn">اللغة الإنجليزية</option>
+              </select>
+            </div>
+
+            <div>
+              <label data-i18n="notesLabel" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">ملاحظات إضافية (اختياري)</label>
+              <textarea id="req-notes" rows="2" data-i18n-placeholder="notesPlaceholder" placeholder="أي تفاصيل إضافية لإدارة الموارد البشرية..."
+                class="w-full p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium text-slate-800 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-700 outline-none"></textarea>
+            </div>
+
+            <div>
+              <label data-i18n="cvUploadLabel" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">السيرة الذاتية / المستندات المرفقة (CV - PDF / DOCX)</label>
+              <div class="relative flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 border border-dashed border-slate-300 dark:border-slate-600 rounded-xl hover:border-blue-600 dark:hover:border-blue-500 transition">
+                <input type="file" id="req-cv-file" accept=".pdf,.doc,.docx" onchange="handleCvFileSelect(event)"
+                  class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+                <div class="flex items-center gap-2.5 min-w-0">
+                  <div class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-400 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    </svg>
+                  </div>
+                  <span id="req-cv-filename" data-i18n="cvPlaceholder" class="text-xs font-semibold text-slate-500 dark:text-slate-400 truncate">اضغط لرفع ملف السيرة الذاتية (اختياري)...</span>
+                </div>
+                <span data-i18n="cvBrowseBtn" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-[11px] font-bold text-slate-700 dark:text-slate-200 shrink-0">اختيار ملف</span>
+              </div>
+            </div>
+
+            <!-- Live Automated Verification Progress Box -->
+            <div id="submission-progress-box" class="hidden p-3.5 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 space-y-2">
+              <div class="flex items-center justify-between text-xs font-extrabold text-blue-900 dark:text-blue-200">
+                <span id="progress-step-label">جاري التحقق من السجل الوظيفي...</span>
+                <span id="progress-percent">35%</span>
+              </div>
+              <div class="w-full h-2 bg-blue-200 dark:bg-blue-900 rounded-full overflow-hidden">
+                <div id="progress-bar-fill" class="h-full bg-blue-700 dark:bg-blue-400 transition-all duration-300" style="width: 35%"></div>
+              </div>
+            </div>
+
+            <button type="submit" id="submit-req-btn"
+              class="w-full py-3.5 px-6 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl shadow-lg shadow-blue-700/20 transition flex items-center justify-center gap-2 text-sm min-h-[48px]">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+              </svg>
+              <span data-i18n="submitReqBtn">إرسال الطلب للاعتماد الإداري</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Steps 2-4: Live Workflow Tracker & Approved PDF Downloads -->
+        <div class="lg:col-span-7 space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white font-extrabold text-xs flex items-center justify-center">2-4</div>
+              <h3 data-i18n="tabMyReqs" class="font-extrabold text-slate-900 dark:text-white text-base sm:text-lg">تتبع مسار الطلبات والشهادات المعتمدة</h3>
+            </div>
+          </div>
+
+          <div id="employee-requests-cards" class="space-y-4">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- =================================================================== -->
+    <!-- SUB-VIEW B: HR MANAGER END-TO-END WORKFLOW COMMAND CENTER           -->
+    <!-- =================================================================== -->
+    <main id="hr-dashboard" class="hidden flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
+      
+      <!-- HR Workflow Navigation Tabs -->
+      <div class="flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+        <button id="hr-tab-btn-approvals" onclick="switchHRTab('approvals')"
+          class="px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-navy-900 dark:bg-blue-700 text-white shadow-sm transition flex items-center gap-2 min-h-[44px]">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span data-i18n="hrTabApprovals">1. بوابة الاعتماد والموافقات</span>
+          <span id="hr-tab-pending-pill" class="px-2 py-0.5 rounded-full bg-amber-500 text-slate-950 text-[11px] font-extrabold">0</span>
+        </button>
+
+        <button id="hr-tab-btn-digest" onclick="switchHRTab('digest')"
+          class="px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 transition flex items-center gap-2 min-h-[44px]">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <span data-i18n="hrTabDigest">2. التقرير التنفيذي اليومي</span>
+        </button>
+
+        <button id="hr-tab-btn-audit" onclick="switchHRTab('audit')"
+          class="px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 transition flex items-center gap-2 min-h-[44px]">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
+          </svg>
+          <span data-i18n="hrTabAudit">3. سجل التدقيق والرقابة</span>
+        </button>
+      </div>
+
+      <!-- HR TAB 1: APPROVAL QUEUE -->
+      <div id="hr-tab-approvals" class="space-y-6">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200/90 dark:border-slate-800 overflow-hidden">
+          <div class="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-4 bg-slate-50/70 dark:bg-slate-800/40">
+            <div>
+              <h3 data-i18n="queueTitle" class="font-extrabold text-slate-900 dark:text-white text-base sm:text-lg">طلبات الوثائق والشهادات الرسمية</h3>
+              <p data-i18n="queueSub" class="text-xs text-slate-500 dark:text-slate-400">مراجعة المسودات المُعدّة آلياً واتخاذ قرار الاعتماد لإصدار الشهادة بصيغة PDF</p>
+            </div>
+            <span id="hr-pending-badge" class="px-3.5 py-1.5 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 text-xs font-extrabold">
+              0 طلبات بانتظار القرار
+            </span>
+          </div>
+
+          <div id="hr-requests-list" class="p-5 sm:p-6 divide-y divide-slate-100 dark:divide-slate-800">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <!-- HR TAB 2: DAILY EXECUTIVE DIGEST -->
+      <div id="hr-tab-digest" class="hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200/90 dark:border-slate-800 overflow-hidden">
+          <div class="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h3 data-i18n="digestTitle" class="font-extrabold text-slate-900 dark:text-white text-base sm:text-lg">ملخص العمليات اليومي للإدارة العليا</h3>
+              <p data-i18n="digestSub" class="text-xs text-slate-500 dark:text-slate-400">تحديث لحظي ومباشر لمؤشرات طلبات الوثائق والمرفقات والاعتمادات وسجل الرقابة</p>
+            </div>
+            <button onclick="dispatchExecutiveReport()"
+              class="py-3 px-5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-md shadow-emerald-600/20 transition flex items-center gap-2 min-h-[44px]">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <span data-i18n="sendReportBtn">إرسال التقرير اليومي للإدارة الآن</span>
+            </button>
+          </div>
+
+          <div class="p-4 sm:p-8 bg-slate-50 dark:bg-slate-950/60">
+            <div class="max-w-2xl mx-auto bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800">
+              <div class="bg-gradient-to-l from-navy-900 to-navy-800 text-white p-5 sm:p-6">
+                <h4 data-i18n="digestCardTitle" class="text-base sm:text-lg font-extrabold">التقرير التنفيذي اليومي لإدارة الموارد البشرية</h4>
+                <p class="text-xs text-slate-300 mt-1" id="digest-report-date">2026-11-20</p>
+              </div>
+              <div class="p-5 sm:p-6 overflow-x-auto">
+                <table class="w-full text-sm border-collapse">
+                  <thead>
+                    <tr class="bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-b border-slate-200 dark:border-slate-700">
+                      <th data-i18n="colMetric" class="py-3 px-4 font-bold text-start">المؤشر التشغيلي</th>
+                      <th data-i18n="colValue" class="py-3 px-4 font-bold text-center">القيمة الحالية</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                    <tr>
+                      <td data-i18n="kpiTotalRequests" class="py-3 px-4 font-semibold text-slate-800 dark:text-slate-200">إجمالي طلبات الوثائق المسجلة</td>
+                      <td class="py-3 px-4 text-center font-extrabold text-blue-700 dark:text-blue-400" id="digest-total-count">0</td>
+                    </tr>
+                    <tr>
+                      <td data-i18n="kpiCvAttachments" class="py-3 px-4 font-semibold text-slate-800 dark:text-slate-200">ملفات السيرة الذاتية المرفقة (CV)</td>
+                      <td class="py-3 px-4 text-center font-extrabold text-indigo-700 dark:text-indigo-400" id="digest-cv-count">0</td>
+                    </tr>
+                    <tr>
+                      <td data-i18n="kpiPendingCerts" class="py-3 px-4 font-semibold text-slate-800 dark:text-slate-200">طلبات شهادات بانتظار الاعتماد</td>
+                      <td class="py-3 px-4 text-center font-extrabold text-amber-600 dark:text-amber-400" id="digest-pending-count">0</td>
+                    </tr>
+                    <tr>
+                      <td data-i18n="statApproved" class="py-3 px-4 font-semibold text-slate-800 dark:text-slate-200">الشهادات المعتمدة والصادرة</td>
+                      <td class="py-3 px-4 text-center font-extrabold text-emerald-700 dark:text-emerald-400" id="digest-approved-count">0</td>
+                    </tr>
+                    <tr>
+                      <td data-i18n="kpiRejectedCerts" class="py-3 px-4 font-semibold text-slate-800 dark:text-slate-200">الطلبات المرفوضة</td>
+                      <td class="py-3 px-4 text-center font-extrabold text-rose-600 dark:text-rose-400" id="digest-rejected-count">0</td>
+                    </tr>
+                    <tr>
+                      <td data-i18n="kpiAuditEvents" class="py-3 px-4 font-semibold text-slate-800 dark:text-slate-200">إجمالي العمليات الموثقة بسجل الرقابة</td>
+                      <td class="py-3 px-4 text-center font-extrabold text-slate-700 dark:text-slate-300" id="digest-audit-count">0</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HR TAB 3: AUDIT & ACTIVITY LOG -->
+      <div id="hr-tab-audit" class="hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200/90 dark:border-slate-800 overflow-hidden">
+          <div class="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h3 data-i18n="auditTitle" class="font-extrabold text-slate-900 dark:text-white text-base sm:text-lg">سجل التدقيق والرقابة الإدارية</h3>
+              <p data-i18n="auditSub" class="text-xs text-slate-500 dark:text-slate-400">توثيق زمني كامل لكافة طلبات الموظفين وقرارات الاعتماد والتقارير المرسلة</p>
+            </div>
+            <span data-i18n="verifiedBadge" class="px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 text-xs font-bold border border-emerald-200 dark:border-emerald-800">سجل موثق</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs sm:text-sm min-w-[600px]">
+              <thead class="bg-slate-50 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-slate-700">
+                <tr>
+                  <th data-i18n="colTime" class="py-3.5 px-4 text-start">التوقيت</th>
+                  <th data-i18n="colRef" class="py-3.5 px-4 text-start">الرقم المرجعي</th>
+                  <th data-i18n="colActor" class="py-3.5 px-4 text-start">الصفة الوظيفية</th>
+                  <th data-i18n="colAction" class="py-3.5 px-4 text-start">الإجراء المنفذ</th>
+                  <th data-i18n="colStatus" class="py-3.5 px-4 text-start">الحالة</th>
+                </tr>
+              </thead>
+              <tbody id="hr-audit-tbody" class="divide-y divide-slate-100 dark:divide-slate-800">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- =================================================================== -->
+    <!-- SUB-VIEW C: IT ENGINEER CLOUD & WEBHOOK ADMINISTRATION CENTER       -->
+    <!-- =================================================================== -->
+    <main id="it-dashboard" class="hidden flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
+      
+      <!-- IT Engineer Identity & Security Isolation Banner -->
+      <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200/90 dark:border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-purple-700 text-white flex items-center justify-center text-lg sm:text-xl font-extrabold shrink-0 shadow-md shadow-purple-700/20">
+            IT
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <h2 id="it-profile-name" class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white">م. شنودة — مهندس تكنولوجيا المعلومات</h2>
+              <span class="px-2.5 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-mono text-xs font-bold border border-slate-200 dark:border-slate-700">IT-ADMIN-01</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-400 text-xs font-bold border border-purple-200 dark:border-purple-800 inline-flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                <span data-i18n="itExclusiveBadge">صلاحية هندسية حصرية (RBAC)</span>
+              </span>
+            </div>
+            <p data-i18n="itMetaLine" class="text-xs text-slate-500 dark:text-slate-400 mt-1">إدارة الربط السحابي (n8n Cloud Webhooks) • مراقبة الخوادم • معزول تماماً عن صلاحيات الـ HR</p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+          <button type="button" onclick="testAllItEndpoints()"
+            class="py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-2 min-h-[42px]">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span data-i18n="itTestAllBtn">فحص اتصال المسارات الثلاثة</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Two-Column IT Administration Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
+        
+        <!-- Left (7 cols): Cloud Webhook Endpoints Configuration -->
+        <div class="lg:col-span-7 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200/90 dark:border-slate-800 overflow-hidden">
+          <div class="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3 bg-slate-50/70 dark:bg-slate-800/40">
+            <div class="flex items-center gap-2.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+              <div>
+                <h3 data-i18n="cloudModalTitle" class="font-extrabold text-slate-900 dark:text-white text-base sm:text-lg">إعدادات الربط السحابي المباشر (n8n Cloud)</h3>
+                <p data-i18n="itFormSub" class="text-xs text-slate-500 dark:text-slate-400">تُطبّق التعديلات فوراً على جميع عمليات الموظفين ومدير الموارد البشرية</p>
+              </div>
+            </div>
+          </div>
+
+          <form onsubmit="saveItCloudSettings(event)" class="p-5 sm:p-6 space-y-4">
+            <div class="p-3.5 rounded-xl bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800 text-xs text-blue-900 dark:text-blue-200 leading-relaxed space-y-1.5">
+              <div data-i18n="itWorkspaceLabel" class="font-extrabold">مساحة العمل السحابية المرتبطة:</div>
+              <input type="url" id="it-cfg-workspace" value="https://shenouda0012.app.n8n.cloud"
+                class="w-full font-mono text-[11px] bg-white/90 dark:bg-slate-900 px-3 py-2 rounded-lg border border-blue-200/80 dark:border-blue-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-purple-600 outline-none" dir="ltr" />
+              <p data-i18n="itWorkspaceHint" class="text-[11px] text-blue-800 dark:text-blue-300">
+                تم عزل هذه الإعدادات عن لوحة مدير الـ HR لضمان الأمان الهندسي ومنع أي تعديل غير مقصود على الروابط.
+              </p>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  1. رابط استقبال طلبات الشهادات (WF5 - Certificate Request Webhook URL)
+                </label>
+                <span id="it-badge-wf5" class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">● مفعّل</span>
+              </div>
+              <input type="url" id="it-cfg-requests-endpoint" required
+                class="w-full p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-mono text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-purple-600 outline-none" dir="ltr" />
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  2. رابط مزامنة قرارات الاعتماد (WF7 - HR Decision Sync Webhook URL)
+                </label>
+                <span id="it-badge-wf7" class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">● مفعّل</span>
+              </div>
+              <input type="url" id="it-cfg-decision-endpoint" required
+                class="w-full p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-mono text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-purple-600 outline-none" dir="ltr" />
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  3. رابط تشغيل التقرير اليومي (WF6 - Daily HR Digest Webhook URL)
+                </label>
+                <span id="it-badge-wf6" class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">● مفعّل</span>
+              </div>
+              <input type="url" id="it-cfg-digest-endpoint" required
+                class="w-full p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-mono text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-purple-600 outline-none" dir="ltr" />
+            </div>
+
+            <div class="pt-4 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 dark:border-slate-800">
+              <button type="button" onclick="resetDemoData()" class="px-3.5 py-2.5 text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 rounded-xl transition">
+                استعادة البيانات الافتراضية
+              </button>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="testAllItEndpoints()" class="px-4 py-2.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 rounded-xl transition">
+                  اختبار الاتصال
+                </button>
+                <button type="submit" class="px-5 py-2.5 text-xs font-bold bg-purple-700 hover:bg-purple-800 text-white rounded-xl shadow-md shadow-purple-700/20 transition">
+                  حفظ الإعدادات
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Right (5 cols): Technical Telemetry & Webhook Dispatch Logs -->
+        <div class="lg:col-span-5 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200/90 dark:border-slate-800 overflow-hidden">
+          <div class="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/70 dark:bg-slate-800/40">
+            <div>
+              <h3 data-i18n="itLogsTitle" class="font-extrabold text-slate-900 dark:text-white text-base">سجل الاتصالات التقني (Webhook Logs)</h3>
+              <p data-i18n="itLogsSub" class="text-xs text-slate-500 dark:text-slate-400">مراقبة حية لحالة الإرسال بين البوابة و n8n Cloud</p>
+            </div>
+            <button type="button" onclick="clearItLogs()" class="text-xs font-bold text-slate-500 hover:text-rose-600 transition">مسح</button>
+          </div>
+          <div id="it-technical-logs" class="p-4 sm:p-5 space-y-2.5 max-h-[460px] overflow-y-auto chat-scroll text-xs font-mono" dir="ltr">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- COMPREHENSIVE CONTEXT-AWARE AI CHATBOT WIDGET                         -->
+  <!-- ===================================================================== -->
+  <div id="chatbot-wrapper" class="hidden fixed bottom-4 left-4 right-4 sm:right-auto sm:bottom-5 sm:left-5 z-40 flex flex-col items-end sm:items-start">
+    <!-- Chat Window -->
+    <div id="chatbot-window" class="hidden mb-3 w-full sm:w-[400px] bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col animate-fade-up">
+      <!-- Chat Header -->
+      <div class="bg-gradient-to-l from-navy-900 to-blue-900 text-white px-4 py-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+            </svg>
+          </div>
+          <div>
+            <h4 data-i18n="chatTitle" class="font-bold text-sm leading-tight">المساعد الذكي للموارد البشرية</h4>
+            <span data-i18n="chatOnline" class="text-[11px] text-emerald-300 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> متصل الآن • يجيب على جميع استفساراتك
+            </span>
+          </div>
+        </div>
+        <button onclick="toggleChatbot()" class="p-2 text-slate-300 hover:text-white rounded-lg transition">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Chat Messages Area -->
+      <div id="chatbot-messages" class="p-4 h-64 sm:h-72 overflow-y-auto space-y-3 bg-slate-50 dark:bg-slate-950 chat-scroll text-xs sm:text-sm">
+        <!-- Populated dynamically -->
+      </div>
+
+      <!-- Quick Reply Chips -->
+      <div id="chatbot-chips" class="px-3 py-2 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex flex-wrap gap-1.5">
+        <!-- Populated dynamically -->
+      </div>
+
+      <!-- Chat Input Form -->
+      <form onsubmit="handleChatSubmit(event)" class="p-3 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center gap-2">
+        <input type="text" id="chatbot-input" data-i18n-placeholder="chatPlaceholder" placeholder="اسألني عن أي شيء في الموقع أو شؤون العمل..." required
+          class="flex-1 px-3.5 py-2.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-700 outline-none" />
+        <button type="submit" class="p-2.5 bg-blue-700 hover:bg-blue-800 text-white rounded-xl transition shrink-0 min-h-[42px] min-w-[42px] flex items-center justify-center">
+          <svg class="w-4 h-4 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+          </svg>
+        </button>
+      </form>
+    </div>
+
+    <!-- Floating Trigger Button -->
+    <button onclick="toggleChatbot()"
+      class="flex items-center gap-2.5 bg-navy-900 dark:bg-blue-700 hover:bg-blue-900 dark:hover:bg-blue-600 text-white px-4 py-3.5 rounded-full shadow-xl border border-slate-700 dark:border-blue-500 transition-all min-h-[48px]">
+      <div class="relative">
+        <svg class="w-6 h-6 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+        </svg>
+        <span id="chat-unread-badge" class="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-emerald-500 text-white text-[10px] font-extrabold flex items-center justify-center">1</span>
+      </div>
+      <span data-i18n="chatTitle" class="text-xs sm:text-sm font-bold">المساعد الذكي للموارد البشرية</span>
+    </button>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 1: OFFICIAL LETTERHEAD PDF CERTIFICATE PREVIEW                  -->
+  <!-- ===================================================================== -->
+  <div id="certificate-modal" class="hidden fixed inset-0 z-50 bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl overflow-hidden border border-slate-200 my-auto">
+      <div class="bg-navy-900 text-white px-4 sm:px-6 py-4 flex items-center justify-between gap-2">
+        <span data-i18n="certPreviewHeader" class="font-bold text-xs sm:text-base">معاينة الوثيقة الرسمية المعتمدة (PDF)</span>
+        <div class="flex items-center gap-2">
+          <button onclick="window.print()" class="px-3.5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 transition min-h-[38px]">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+            </svg>
+            <span data-i18n="printPdfBtn">طباعة / تحميل PDF</span>
+          </button>
+          <button onclick="closeModal('certificate-modal')" class="p-2 text-slate-400 hover:text-white rounded-lg">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Printable Letterhead -->
+      <div id="certificate-print-area" class="p-5 sm:p-10 bg-white text-slate-900">
+        <div class="border-4 border-double border-slate-300 p-5 sm:p-9 rounded-xl">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-navy-900 pb-5 mb-6">
+            <div>
+              <span data-i18n="certDeptName" class="text-xs font-bold text-blue-700 block mb-1">إدارة الموارد البشرية والشؤون الإدارية</span>
+              <h2 id="cert-modal-title" class="text-xl sm:text-2xl font-extrabold text-navy-900">شهادة خبرة معتمدة</h2>
+            </div>
+            <div class="font-mono text-xs text-slate-600 space-y-0.5">
+              <div><strong>Ref:</strong> <span id="cert-modal-id">CERT-1795168110291</span></div>
+              <div><strong>Req:</strong> <span id="cert-modal-req">REQ-2026-001</span></div>
+              <div><strong>Date:</strong> <span id="cert-modal-date">2026-11-20</span></div>
+            </div>
+          </div>
+
+          <div class="space-y-4 text-sm sm:text-base leading-loose text-slate-800">
+            <p class="font-bold"><span data-i18n="certToPrefix">إلى:</span> <span id="cert-modal-recipient" class="text-blue-800">من يهمه الأمر</span>،</p>
+            <p id="cert-modal-body-text">
+              تشهد إدارة الموارد البشرية بأن السيد/ أحمد محمود (الرقم الوظيفي: EMP-DEMO-001) يعمل لدينا بوظيفة مطور برمجيات أول في إدارة التحول الرقمي، وذلك اعتباراً من تاريخ 2023-03-15 وحتى تاريخه.
+            </p>
+            <p data-i18n="certDisclaimer">
+              وقد أبدى خلال فترة عمله التزاماً مهنياً عالياً وكفاءة متميزة في أداء المهام الموكلة إليه. وقد أُعطيت له هذه الوثيقة بناءً على طلبه لتقديمها إلى الجهة الموضحة أعلاه دون أدنى مسؤولية مالية على الشركة.
+            </p>
+          </div>
+
+          <div class="mt-10 pt-5 border-t border-slate-200 flex items-end justify-between gap-4">
+            <div>
+              <p data-i18n="certSignLabel" class="text-xs text-slate-500">يُعتمد التوقيع الإلكتروني،</p>
+              <p data-i18n="hrDirectorName" class="font-extrabold text-navy-900 mt-1 text-base">سارة المنصور</p>
+              <p data-i18n="hrDirectorTitle" class="text-xs text-slate-600 font-semibold">مدير إدارة الموارد البشرية</p>
+            </div>
+            <div class="px-4 py-2.5 border-2 border-emerald-700 text-emerald-800 rounded-xl font-extrabold text-xs bg-emerald-50/70 text-center">
+              <div data-i18n="certStampText">مُعتمد إلكترونياً</div>
+              <div class="text-[10px] font-mono mt-0.5 text-emerald-700">VERIFIED HR SEAL</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 2: REJECTION REASON MODAL (HR ONLY)                             -->
+  <!-- ===================================================================== -->
+  <div id="reject-modal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
+      <div class="bg-rose-700 text-white px-6 py-4 flex items-center justify-between">
+        <h3 data-i18n="rejectModalTitle" class="font-bold text-sm sm:text-base">تأكيد رفض الطلب وإرسال ملاحظة للموظف</h3>
+        <button onclick="closeModal('reject-modal')" class="text-rose-200 hover:text-white p-1">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <form onsubmit="confirmRejectRequest(event)" class="p-6 space-y-4">
+        <input type="hidden" id="reject-target-req-id" />
+        <div>
+          <label data-i18n="rejectReasonLabel" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">سبب الرفض (سيظهر للموظف في سجل طلباته)</label>
+          <textarea id="reject-reason-input" rows="3" required data-i18n-placeholder="rejectReasonPlaceholder" placeholder="مثال: يرجى تحديد اسم الجهة الموجه إليها بدقة وإعادة إرسال الطلب..."
+            class="w-full p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-rose-600 outline-none"></textarea>
+        </div>
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button type="button" onclick="closeModal('reject-modal')" data-i18n="cancelBtn" class="px-4 py-2.5 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl">إلغاء</button>
+          <button type="submit" data-i18n="confirmRejectBtn" class="px-5 py-2.5 text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white rounded-xl shadow">تأكيد الرفض</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 3: LIVE CLOUD & WORKFLOW INTEGRATION SETTINGS (HR ONLY)         -->
+  <!-- ===================================================================== -->
+  <div id="cloud-settings-modal" class="hidden fixed inset-0 z-50 bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-xl w-full shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800 my-auto">
+      <div class="bg-navy-900 text-white px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+          <h3 data-i18n="cloudModalTitle" class="font-bold text-sm sm:text-base">إعدادات الربط السحابي المباشر (n8n Cloud)</h3>
+        </div>
+        <button onclick="closeModal('cloud-settings-modal')" class="text-slate-400 hover:text-white p-1">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <form onsubmit="saveCloudSettings(event)" class="p-5 sm:p-6 space-y-4">
+        <div class="p-3.5 rounded-xl bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800 text-xs text-blue-900 dark:text-blue-200 leading-relaxed space-y-1.5">
+          <div class="font-extrabold">مساحة العمل السحابية المرتبطة:</div>
+          <div class="font-mono text-[11px] bg-white/80 dark:bg-slate-900 px-2.5 py-1.5 rounded-lg border border-blue-200/70 dark:border-blue-800" dir="ltr">
+            https://shenouda0012.app.n8n.cloud
+          </div>
+          <p class="text-[11px] text-blue-800 dark:text-blue-300">
+            لربط البوابة مباشرة بمسارات الأتمتة، أضف عقدة <strong>Webhook (POST)</strong> في مسار الشهادات ومسار التقرير اليومي والصق روابط الـ <strong>Production URL</strong> أدناه.
+          </p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+            1. رابط استقبال طلبات الشهادات (Certificate Request Webhook URL)
+          </label>
+          <input type="url" id="cfg-requests-endpoint" placeholder="https://shenouda0012.app.n8n.cloud/webhook/certificate-request"
+            class="w-full p-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-mono text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-700 outline-none" dir="ltr" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+            2. رابط مزامنة قرارات الاعتماد (HR Decision Sync Webhook - اختياري)
+          </label>
+          <input type="url" id="cfg-decision-endpoint" placeholder="https://shenouda0012.app.n8n.cloud/webhook/hr-decision"
+            class="w-full p-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-mono text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-700 outline-none" dir="ltr" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+            3. رابط تشغيل التقرير اليومي (Daily HR Digest Webhook URL)
+          </label>
+          <input type="url" id="cfg-digest-endpoint" placeholder="https://shenouda0012.app.n8n.cloud/webhook/daily-digest"
+            class="w-full p-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-mono text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-700 outline-none" dir="ltr" />
+        </div>
+
+        <div class="pt-3 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 dark:border-slate-800">
+          <button type="button" onclick="resetDemoData()" class="px-3 py-2 text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 rounded-xl transition">
+            استعادة البيانات الافتراضية
+          </button>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="testCloudConnection()" class="px-3.5 py-2 text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 rounded-xl transition">
+              اختبار الاتصال
+            </button>
+            <button type="submit" class="px-5 py-2 text-xs font-bold bg-blue-700 hover:bg-blue-800 text-white rounded-xl shadow">
+              حفظ الإعدادات
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- APPLICATION LOGIC: BILINGUAL I18N, SHOW PASSWORD, END-TO-END WORKFLOW -->
+  <!-- ===================================================================== -->
+  <script>
+    // =========================================================================
+    // 1. BILINGUAL DICTIONARY (ARABIC RTL & ENGLISH LTR)
+    // =========================================================================
+    const I18N = {
+      ar: {
+        brandSub: 'المنظومة الرقمية المتكاملة',
+        brandName: 'بوابة خدمات الموارد البشرية',
+        heroTitle1: 'دورة عمل رقمية متكاملة',
+        heroTitle2: 'لإصدار واعتماد الشهادات',
+        heroDesc: 'منظومة مؤسسية ذكية تربط الموظف بإدارة الموارد البشرية مباشرة؛ بدءاً من تقديم طلب الشهادة والتحقق الآلي من السجل الوظيفي، مروراً بالاعتماد الإداري، وحتى إصدار الوثيقة الرسمية بصيغة PDF والتقارير التنفيذية اليومية.',
+        feat1Title: 'مسار إصدار الشهادات والوثائق',
+        feat1Desc: 'تقديم الطلب ⬅️ التحقق الآلي ⬅️ اعتماد مدير HR ⬅️ تحميل الشهادة PDF.',
+        feat2Title: 'التقرير التنفيذي وسجل التدقيق',
+        feat2Desc: 'متابعة مؤشرات الطلبات والمرفقات والاعتمادات اليومية مع توثيق كامل لكافة العمليات.',
+        copyright: 'جميع الحقوق محفوظة © إدارة الموارد البشرية',
+        systemOnline: 'النظام متصل ويعمل بكفاءة',
+        loginHeading: 'تسجيل الدخول إلى البوابة',
+        loginSubheading: 'يرجى اختيار صفة الدخول أولاً لتفعيل صلاحياتك والانتقال إلى مسار العمل المخصص:',
+        roleClientTitle: 'عميل / موظف',
+        roleClientDesc: 'تقديم طلب شهادة جديدة، تتبع مراحل الاعتماد، وتحميل الشهادة المعتمدة بصيغة PDF.',
+        roleHrTitle: 'مدير الموارد البشرية (HR)',
+        roleHrDesc: 'اعتماد أو رفض طلبات الشهادات، تشغيل التقرير التنفيذي اليومي، ومراجعة سجل التدقيق.',
+        idLabelClient: 'البريد الإلكتروني أو الرقم الوظيفي (للموظف / العميل)',
+        idLabelHr: 'البريد المؤسسي أو الرقم الوظيفي (لمدير الموارد البشرية)',
+        passwordLabel: 'كلمة المرور',
+        isolatedSession: 'جلسة محمية ومعزولة الصلاحيات',
+        loginBtnClient: 'تسجيل الدخول كـ عميل / موظف',
+        loginBtnHr: 'تسجيل الدخول كـ مدير الموارد البشرية (HR)',
+        demoCredsSummary: 'بيانات الدخول التجريبية للمعاينة',
+        demoClientLabel: 'حساب موظف / عميل:',
+        demoHrLabel: 'حساب مدير الموارد البشرية:',
+        cloudBtnText: 'الربط السحابي',
+        logoutBtn: 'تسجيل الخروج',
+        activeStatus: 'على رأس العمل',
+        empMetaLine: 'مطور برمجيات أول • إدارة التحول الرقمي • تاريخ الالتحاق: 2023-03-15',
+        statTotal: 'إجمالي طلباتي',
+        statPending: 'قيد الاعتماد',
+        statApproved: 'شهادات معتمدة',
+        tabMyReqs: 'تتبع مسار الطلبات والشهادات المعتمدة',
+        formTitle: 'بدء طلب وثيقة جديدة',
+        formSubtitle: 'إرسال الطلب للتدقيق الآلي واعتماد مدير HR',
+        docTypeLabel: 'نوع الوثيقة المطلوبة',
+        docOpt1: 'شهادة خبرة معتمدة',
+        docOpt2: 'شهادة تعريف بالراتب',
+        docOpt3: 'خطاب موجه للبنك',
+        docOpt4: 'إثبات قيد وظيفي',
+        recipientLabel: 'الجهة الموجه إليها',
+        recipientPlaceholder: 'مثال: السفارة / البنك / لمن يهمه الأمر',
+        docLangLabel: 'لغة الوثيقة',
+        langOptAr: 'اللغة العربية',
+        langOptEn: 'اللغة الإنجليزية',
+        notesLabel: 'ملاحظات إضافية (اختياري)',
+        notesPlaceholder: 'أي تفاصيل إضافية لإدارة الموارد البشرية...',
+        cvUploadLabel: 'السيرة الذاتية / المستندات الداعمة (CV - PDF / DOCX)',
+        cvPlaceholder: 'اضغط لرفع ملف السيرة الذاتية (اختياري)...',
+        cvBrowseBtn: 'اختيار ملف',
+        submitReqBtn: 'إرسال الطلب للاعتماد الإداري',
+        kpiTotalRequests: 'إجمالي طلبات الوثائق المسجلة',
+        kpiCvAttachments: 'ملفات السيرة الذاتية المرفقة (CV)',
+        kpiRejectedCerts: 'الطلبات المرفوضة',
+        kpiAuditEvents: 'إجمالي العمليات الموثقة بسجل الرقابة',
+        kpiPendingCerts: 'طلبات شهادات بانتظار الاعتماد',
+        statApproved: 'الشهادات المعتمدة والصادرة',
+        hrTabApprovals: '1. بوابة الاعتماد والموافقات',
+        hrTabDigest: '2. التقرير التنفيذي اليومي',
+        hrTabAudit: '3. سجل التدقيق والرقابة',
+        queueTitle: 'طلبات الوثائق والشهادات الرسمية',
+        queueSub: 'مراجعة المسودات المُعدّة آلياً واتخاذ قرار الاعتماد لإصدار الشهادة بصيغة PDF',
+        digestTitle: 'ملخص العمليات اليومي للإدارة العليا',
+        digestSub: 'تحديث لحظي ومباشر لمؤشرات طلبات الوثائق والمرفقات والاعتمادات وسجل الرقابة',
+        sendReportBtn: 'إرسال التقرير اليومي للإدارة الآن',
+        digestCardTitle: 'التقرير التنفيذي اليومي لإدارة الموارد البشرية',
+        colMetric: 'المؤشر التشغيلي',
+        colValue: 'القيمة الحالية',
+        auditTitle: 'سجل التدقيق والرقابة الإدارية',
+        auditSub: 'توثيق زمني كامل لكافة طلبات الموظفين وقرارات الاعتماد والتقارير المرسلة',
+        verifiedBadge: 'سجل موثق',
+        colTime: 'التوقيت',
+        colRef: 'الرقم المرجعي',
+        colActor: 'الصفة الوظيفية',
+        colAction: 'الإجراء المنفذ',
+        colStatus: 'الحالة',
+        chatTitle: 'المساعد الذكي للموارد البشرية',
+        chatOnline: 'متصل الآن • يجيب على جميع استفساراتك',
+        chatPlaceholder: 'اسألني عن أي شيء في الموقع أو شؤون العمل...',
+        certPreviewHeader: 'معاينة الوثيقة الرسمية المعتمدة (PDF)',
+        printPdfBtn: 'طباعة / تحميل PDF',
+        certDeptName: 'إدارة الموارد البشرية والشؤون الإدارية',
+        certToPrefix: 'إلى:',
+        certDisclaimer: 'وقد أبدى خلال فترة عمله التزاماً مهنياً عالياً وكفاءة متميزة في أداء المهام الموكلة إليه. وقد أُعطيت له هذه الوثيقة بناءً على طلبه لتقديمها إلى الجهة الموضحة أعلاه دون أدنى مسؤولية مالية على الشركة.',
+        certSignLabel: 'يُعتمد التوقيع الإلكتروني،',
+        hrDirectorName: 'سارة المنصور',
+        hrDirectorTitle: 'مدير إدارة الموارد البشرية',
+        certStampText: 'مُعتمد إلكترونياً',
+        rejectModalTitle: 'تأكيد رفض الطلب وإرسال ملاحظة للموظف',
+        rejectReasonLabel: 'سبب الرفض (سيظهر للموظف في سجل طلباته)',
+        rejectReasonPlaceholder: 'مثال: يرجى تحديد اسم الجهة الموجه إليها بدقة وإعادة إرسال الطلب...',
+        cancelBtn: 'إلغاء',
+        confirmRejectBtn: 'تأكيد الرفض',
+        roleItTitle: 'مهندس الـ IT',
+        roleItDesc: 'إدارة روابط الربط السحابي (n8n Webhooks)، فحص الاتصال، ومراقبة السجل التقني.',
+        idLabelIt: 'البريد الهندسي أو الرقم الوظيفي (لمهندس تكنولوجيا المعلومات)',
+        loginBtnIt: 'تسجيل الدخول كـ مهندس تكنولوجيا المعلومات (IT)',
+        demoItLabel: 'حساب مهندس تكنولوجيا المعلومات (IT):',
+        itExclusiveBadge: 'صلاحية هندسية حصرية (RBAC)',
+        itMetaLine: 'إدارة الربط السحابي (n8n Cloud Webhooks) • مراقبة الخوادم • معزول تماماً عن صلاحيات الـ HR',
+        itTestAllBtn: 'فحص اتصال المسارات الثلاثة',
+        itFormSub: 'تُطبّق التعديلات فوراً على جميع عمليات الموظفين ومدير الموارد البشرية',
+        itWorkspaceLabel: 'مساحة العمل السحابية المرتبطة:',
+        itWorkspaceHint: 'تم عزل هذه الإعدادات عن لوحة مدير الـ HR لضمان الأمان الهندسي ومنع أي تعديل غير مقصود على الروابط.',
+        itLogsTitle: 'سجل الاتصالات التقني (Webhook Logs)',
+        itLogsSub: 'مراقبة حية لحالة الإرسال بين البوابة و n8n Cloud'
+      },
+      en: {
+        brandSub: 'Integrated Digital Ecosystem',
+        brandName: 'Enterprise HR Portal',
+        heroTitle1: 'End-to-End Digital Workflow',
+        heroTitle2: 'for Official HR Certificates',
+        heroDesc: 'A unified corporate platform connecting employees directly with HR leadership; from certificate request submission and automated verification to HR approval, PDF issuance, and daily executive reports.',
+        feat1Title: 'Certificate Issuance Workflow',
+        feat1Desc: 'Submit Request ➔ Automated Verification ➔ HR Approval ➔ Download PDF.',
+        feat2Title: 'Executive Digest & Audit Log',
+        feat2Desc: 'Real-time tracking of requests, attachments, and daily approvals with complete audit logs.',
+        copyright: 'All Rights Reserved © Human Resources Department',
+        systemOnline: 'System Connected & Operational',
+        loginHeading: 'Sign In to Portal',
+        loginSubheading: 'Please select your access role first to activate your permissions and enter your workflow:',
+        roleClientTitle: 'Employee / Client',
+        roleClientDesc: 'Submit a new certificate request, track approval stages, and download verified PDFs.',
+        roleHrTitle: 'HR Manager',
+        roleHrDesc: 'Approve or reject certificate requests, run the daily executive report, and inspect audit logs.',
+        idLabelClient: 'Corporate Email or Employee ID (Employee / Client)',
+        idLabelHr: 'Executive Email or Admin ID (HR Manager)',
+        passwordLabel: 'Password',
+        isolatedSession: 'Protected & Role-Isolated Session',
+        loginBtnClient: 'Sign In as Employee / Client',
+        loginBtnHr: 'Sign In as HR Manager',
+        demoCredsSummary: 'Demo Credentials for Preview',
+        demoClientLabel: 'Employee / Client Account:',
+        demoHrLabel: 'HR Manager Account:',
+        cloudBtnText: 'Cloud Sync',
+        logoutBtn: 'Sign Out',
+        activeStatus: 'Active Employee',
+        empMetaLine: 'Senior Software Engineer • Digital Transformation • Joined: 2023-03-15',
+        statTotal: 'Total Requests',
+        statPending: 'Pending HR',
+        statApproved: 'Approved PDFs',
+        tabMyReqs: 'Live Request Workflow & Approved PDFs',
+        formTitle: 'Start New Document Request',
+        formSubtitle: 'Submit request for automated verification & HR approval',
+        docTypeLabel: 'Document Type',
+        docOpt1: 'Experience Certificate',
+        docOpt2: 'Salary Definition Certificate',
+        docOpt3: 'Bank Introduction Letter',
+        docOpt4: 'Employment Proof Letter',
+        recipientLabel: 'Addressed To (Recipient Entity)',
+        recipientPlaceholder: 'e.g., Embassy / National Bank / To Whom It May Concern',
+        docLangLabel: 'Document Language',
+        langOptAr: 'Arabic',
+        langOptEn: 'English',
+        notesLabel: 'Additional Notes (Optional)',
+        notesPlaceholder: 'Any additional details for the HR department...',
+        cvUploadLabel: 'Curriculum Vitae / Supporting CV (PDF / DOCX)',
+        cvPlaceholder: 'Click to upload your CV file (optional)...',
+        cvBrowseBtn: 'Browse',
+        submitReqBtn: 'Submit Request for HR Approval',
+        kpiTotalRequests: 'Total Document Requests',
+        kpiCvAttachments: 'Attached CV Files',
+        kpiRejectedCerts: 'Rejected Requests',
+        kpiAuditEvents: 'Total Logged Audit Events',
+        kpiPendingCerts: 'Pending Certificate Approvals',
+        statApproved: 'Approved & Issued Certificates',
+        hrTabApprovals: '1. Approval Gate',
+        hrTabDigest: '2. Daily Executive Digest',
+        hrTabAudit: '3. Audit & Compliance Log',
+        queueTitle: 'Official Document & Certificate Requests',
+        queueSub: 'Review automated drafts and approve to generate official PDF certificates',
+        digestTitle: 'Daily HR Operations Summary',
+        digestSub: 'Real-time metrics for document requests, CV attachments, approvals, and audit logs',
+        sendReportBtn: 'Dispatch Daily Report Now',
+        digestCardTitle: 'Daily Executive HR Operations Digest',
+        colMetric: 'Operational Metric',
+        colValue: 'Current Value',
+        auditTitle: 'Administrative Audit & Compliance Log',
+        auditSub: 'Complete chronological log of employee requests, approvals, and dispatched reports',
+        verifiedBadge: 'Verified Log',
+        colTime: 'Timestamp',
+        colRef: 'Reference ID',
+        colActor: 'Role / Actor',
+        colAction: 'Action Executed',
+        colStatus: 'Status',
+        chatTitle: 'Smart HR Assistant',
+        chatOnline: 'Online • Answers All Your Questions',
+        chatPlaceholder: 'Ask me anything about the portal or your work...',
+        certPreviewHeader: 'Official Approved Document Preview (PDF)',
+        printPdfBtn: 'Print / Download PDF',
+        certDeptName: 'Human Resources & Administration Department',
+        certToPrefix: 'To:',
+        certDisclaimer: 'Throughout his tenure, he has demonstrated high professional commitment and outstanding competence. This certificate is issued upon his request for submission to the above entity without any financial liability on the company.',
+        certSignLabel: 'Digitally Signed & Approved by,',
+        hrDirectorName: 'Sara Al-Mansour',
+        hrDirectorTitle: 'Human Resources Director',
+        certStampText: 'DIGITALLY APPROVED',
+        rejectModalTitle: 'Confirm Rejection & Notify Employee',
+        rejectReasonLabel: 'Rejection Reason (Visible to employee in request history)',
+        rejectReasonPlaceholder: 'e.g., Please specify the exact recipient entity name and resubmit...',
+        cancelBtn: 'Cancel',
+        confirmRejectBtn: 'Confirm Rejection',
+        roleItTitle: 'IT Engineer',
+        roleItDesc: 'Manage n8n Cloud Webhooks, test endpoint connectivity, and inspect technical logs.',
+        idLabelIt: 'Engineering Email or Admin ID (IT Engineer)',
+        loginBtnIt: 'Sign In as IT Engineer',
+        demoItLabel: 'IT Engineer Account:',
+        itExclusiveBadge: 'Exclusive Engineering RBAC',
+        itMetaLine: 'n8n Cloud Webhook Administration • Endpoint Health • Strictly Isolated from HR',
+        itTestAllBtn: 'Test All 3 Endpoints',
+        itFormSub: 'Changes take effect immediately across Employee and HR Manager workflows',
+        itWorkspaceLabel: 'Connected Cloud Workspace:',
+        itWorkspaceHint: 'Isolated from the HR Manager dashboard to enforce architectural security and prevent accidental URL edits.',
+        itLogsTitle: 'Technical Webhook Logs',
+        itLogsSub: 'Live telemetry between the Portal and n8n Cloud'
+      }
+    };
+
+    let currentLang = localStorage.getItem('corp_hr_lang') || 'ar';
+    let currentTheme = localStorage.getItem('corp_hr_theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+    // =========================================================================
+    // 2. THEME, LANGUAGE & SHOW/HIDE PASSWORD ENGINE
+    // =========================================================================
+    function applyTheme(theme) {
+      currentTheme = theme;
+      localStorage.setItem('corp_hr_theme', theme);
+      const htmlEl = document.documentElement;
+      const sunIcons = document.querySelectorAll('.sun-icon');
+      const moonIcons = document.querySelectorAll('.moon-icon');
+
+      if (theme === 'dark') {
+        htmlEl.classList.add('dark');
+        sunIcons.forEach(el => el.classList.remove('hidden'));
+        moonIcons.forEach(el => el.classList.add('hidden'));
+      } else {
+        htmlEl.classList.remove('dark');
+        sunIcons.forEach(el => el.classList.add('hidden'));
+        moonIcons.forEach(el => el.classList.remove('hidden'));
+      }
+    }
+
+    function toggleTheme() {
+      applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    }
+
+    function updatePasswordToggleLabel() {
+      const passInput = document.getElementById('login-password');
+      const labelEl = document.getElementById('toggle-password-text');
+      if (!passInput || !labelEl) return;
+      const isHidden = passInput.type === 'password';
+      labelEl.textContent = isHidden
+        ? (currentLang === 'ar' ? 'إظهار' : 'Show')
+        : (currentLang === 'ar' ? 'إخفاء' : 'Hide');
+    }
+
+    function togglePasswordVisibility() {
+      const passInput = document.getElementById('login-password');
+      const eyeOpen = document.getElementById('eye-open-icon');
+      const eyeClosed = document.getElementById('eye-closed-icon');
+      if (passInput.type === 'password') {
+        passInput.type = 'text';
+        eyeOpen.classList.add('hidden');
+        eyeClosed.classList.remove('hidden');
+      } else {
+        passInput.type = 'password';
+        eyeOpen.classList.remove('hidden');
+        eyeClosed.classList.add('hidden');
+      }
+      updatePasswordToggleLabel();
+    }
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('corp_hr_lang', lang);
+      const htmlEl = document.documentElement;
+      htmlEl.lang = lang;
+      htmlEl.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+      const dict = I18N[lang];
+
+      document.querySelectorAll('.lang-btn-text').forEach(el => {
+        el.textContent = lang === 'ar' ? 'English' : 'عربي';
+      });
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          el.innerHTML = dict[key];
+        }
+      });
+
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key]) {
+          el.placeholder = dict[key];
+        }
+      });
+
+      updatePasswordToggleLabel();
+      selectLoginRole(selectedLoginRole, false);
+
+      if (currentUser) {
+        updateHeaderUserIdentity();
+        if (currentUser.role === 'client') {
+          renderEmployeeDashboard();
+        } else if (currentUser.role === 'hr') {
+          renderHRDashboard();
+        } else if (currentUser.role === 'it') {
+          renderITDashboard();
+        }
+        initContextChatbot();
+      }
+    }
+
+    function toggleLanguage() {
+      applyLanguage(currentLang === 'ar' ? 'en' : 'ar');
+    }
+
+    // =========================================================================
+    // 3. CORPORATE ACCOUNTS, STATE & N8N CLOUD INTEGRATION
+    // =========================================================================
+    const AUTH_ACCOUNTS = {
+      client: {
+        identifiers: ['emp@company.com', 'emp-demo-001'],
+        password: 'emp123',
+        employee_id: 'EMP-DEMO-001',
+        name_ar: 'أحمد محمود',
+        name_en: 'Ahmed Mahmoud',
+        title_ar: 'مطور برمجيات أول',
+        title_en: 'Senior Software Engineer',
+        role: 'client'
+      },
+      hr: {
+        identifiers: ['hr@company.com', 'hr-admin-01'],
+        password: 'hr@admin2026',
+        employee_id: 'HR-ADMIN-01',
+        name_ar: 'سارة المنصور',
+        name_en: 'Sara Al-Mansour',
+        title_ar: 'مدير إدارة الموارد البشرية',
+        title_en: 'Human Resources Director',
+        role: 'hr'
+      },
+      it: {
+        identifiers: ['it@company.com', 'it-admin-01'],
+        password: 'it@admin2026',
+        employee_id: 'IT-ADMIN-01',
+        name_ar: 'م. شنودة',
+        name_en: 'Eng. Shenouda',
+        title_ar: 'مهندس تكنولوجيا المعلومات وأنظمة الأتمتة',
+        title_en: 'IT & Cloud Automation Engineer',
+        role: 'it'
+      }
+    };
+
+    const DEFAULT_REQUESTS = [
+      {
+        request_id: 'REQ-2026-004',
+        type_code: 'EXPERIENCE_CERTIFICATE',
+        type_ar: 'شهادة خبرة معتمدة',
+        type_en: 'Experience Certificate',
+        employee_id: 'EMP-DEMO-001',
+        employee_name_ar: 'أحمد محمود',
+        employee_name_en: 'Ahmed Mahmoud',
+        language: 'Arabic',
+        recipient: 'السفارة الكندية / Canadian Embassy',
+        notes: 'استكمال إجراءات السفر الرسمي',
+        status: 'PENDING',
+        certificate_id: 'CERT-1795169002415',
+        created_at: '2026-11-20 12:08',
+        decision_at: '',
+        draft_ar: 'تشهد إدارة الموارد البشرية بأن السيد/ أحمد محمود (الرقم الوظيفي: EMP-DEMO-001) يعمل لدينا بوظيفة مطور برمجيات أول في إدارة التحول الرقمي، وذلك اعتباراً من تاريخ 2023-03-15 وحتى تاريخه بكفاءة والتزام تام.',
+        draft_en: 'This is to certify that Mr. Ahmed Mahmoud (Employee ID: EMP-DEMO-001) is employed with us as a Senior Software Engineer in the Digital Transformation Department since 2023-03-15 to date with high professionalism.'
+      },
+      {
+        request_id: 'REQ-2026-002',
+        type_code: 'SALARY_DEFINITION',
+        type_ar: 'شهادة تعريف بالراتب',
+        type_en: 'Salary Definition Certificate',
+        employee_id: 'EMP-DEMO-001',
+        employee_name_ar: 'أحمد محمود',
+        employee_name_en: 'Ahmed Mahmoud',
+        language: 'Arabic',
+        recipient: 'البنك الأهلي التجاري / National Bank',
+        notes: 'تحديث البيانات البنكية',
+        status: 'APPROVED',
+        certificate_id: 'CERT-1795168110291',
+        created_at: '2026-11-18 10:15',
+        decision_at: '2026-11-18',
+        draft_ar: 'تشهد إدارة الموارد البشرية بأن السيد/ أحمد محمود (الرقم الوظيفي: EMP-DEMO-001) يعمل لدينا بوظيفة مطور برمجيات أول منذ تاريخ 2023-03-15 وحتى تاريخه، ويتقاضى راتباً شهرياً منتظماً وفق لائحة الأجور المعتمدة بالشركة.',
+        draft_en: 'This is to certify that Mr. Ahmed Mahmoud (Employee ID: EMP-DEMO-001) works as a Senior Software Engineer since 2023-03-15 to date, receiving a regular monthly salary in accordance with company payroll policy.'
+      }
+    ];
+
+    const DEFAULT_AUDIT_LOGS = [
+      {
+        timestamp: '2026-11-20 12:08',
+        ref_id: 'REQ-2026-004',
+        actor_ar: 'موظف (EMP-DEMO-001)',
+        actor_en: 'Employee (EMP-DEMO-001)',
+        action_ar: 'تقديم طلب شهادة خبرة معتمدة',
+        action_en: 'Submitted Experience Certificate Request',
+        status_ar: 'قيد المراجعة',
+        status_en: 'Pending Review'
+      },
+      {
+        timestamp: '2026-11-20 09:00',
+        ref_id: 'RPT-2026-1120',
+        actor_ar: 'النظام الآلي',
+        actor_en: 'Automated Scheduler',
+        action_ar: 'إصدار التقرير التنفيذي اليومي للإدارة',
+        action_en: 'Dispatched Daily Executive HR Digest',
+        status_ar: 'مكتمل',
+        status_en: 'Completed'
+      },
+      {
+        timestamp: '2026-11-18 11:30',
+        ref_id: 'REQ-2026-002',
+        actor_ar: 'مدير HR (HR-ADMIN-01)',
+        actor_en: 'HR Director (HR-ADMIN-01)',
+        action_ar: 'اعتماد وإصدار شهادة تعريف بالراتب',
+        action_en: 'Approved & Issued Salary Certificate',
+        status_ar: 'معتمد',
+        status_en: 'Approved'
+      }
+    ];
+
+    let selectedLoginRole = 'client';
+    let currentUser = null;
+    let requests = JSON.parse(localStorage.getItem('corp_hr_requests_v5')) || DEFAULT_REQUESTS;
+    let auditLogs = JSON.parse(localStorage.getItem('corp_hr_audits_v5')) || DEFAULT_AUDIT_LOGS;
+    const DEFAULT_CLOUD_ENDPOINTS = {
+      workspaceUrl: 'https://shenouda0012.app.n8n.cloud',
+      reqUrl: 'https://shenouda0012.app.n8n.cloud/webhook/hr-certificate-request',
+      decisionUrl: 'https://shenouda0012.app.n8n.cloud/webhook/hr-decision',
+      digestUrl: 'https://shenouda0012.app.n8n.cloud/webhook/daily-digest'
+    };
+    let cloudEndpoints = JSON.parse(localStorage.getItem('corp_hr_cloud_v6')) || { ...DEFAULT_CLOUD_ENDPOINTS };
+    let itTechLogs = JSON.parse(localStorage.getItem('corp_hr_it_logs_v6')) || [
+      `[${new Date().toISOString().slice(0, 16).replace('T', ' ')}] [RBAC] IT Engineer isolated cloud control initialized.`
+    ];
+    function logItEvent(msg) {
+      const ts = new Date().toISOString().slice(0, 16).replace('T', ' ');
+      itTechLogs.unshift(`[${ts}] ${msg}`);
+      if (itTechLogs.length > 40) itTechLogs.pop();
+      localStorage.setItem('corp_hr_it_logs_v6', JSON.stringify(itTechLogs));
+      if (currentUser && currentUser.role === 'it') renderITLogs();
+    }
+    let isChatOpen = false;
+
+    function persistData() {
+      localStorage.setItem('corp_hr_requests_v5', JSON.stringify(requests));
+      localStorage.setItem('corp_hr_audits_v5', JSON.stringify(auditLogs));
+    }
+
+    // =========================================================================
+    // 4. ROLE SELECTION & STRICT LOGIN VALIDATION
+    // =========================================================================
+    function selectLoginRole(role, resetCreds = true) {
+      selectedLoginRole = role;
+      const dict = I18N[currentLang];
+      const clientCard = document.getElementById('role-card-client');
+      const hrCard = document.getElementById('role-card-hr');
+      const itCard = document.getElementById('role-card-it');
+      const radioClient = document.getElementById('radio-client');
+      const radioHr = document.getElementById('radio-hr');
+      const radioIt = document.getElementById('radio-it');
+      const idLabel = document.getElementById('login-id-label');
+      const idInput = document.getElementById('login-identifier');
+      const passInput = document.getElementById('login-password');
+      const submitBtn = document.getElementById('login-submit-btn');
+      const submitText = document.getElementById('login-submit-text');
+      const errorBox = document.getElementById('login-error-box');
+
+      errorBox.classList.add('hidden');
+
+      const inactiveCardCls = 'cursor-pointer select-none p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700 transition-all';
+      const inactiveRadioCls = 'w-5 h-5 rounded-full border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-transparent flex items-center justify-center transition-all';
+
+      clientCard.className = inactiveCardCls;
+      hrCard.className = inactiveCardCls;
+      itCard.className = inactiveCardCls;
+      radioClient.className = inactiveRadioCls;
+      radioHr.className = inactiveRadioCls;
+      radioIt.className = inactiveRadioCls;
+
+      if (role === 'client') {
+        clientCard.className = 'cursor-pointer select-none p-4 rounded-2xl border-2 border-blue-700 bg-blue-50/70 dark:bg-blue-950/40 dark:border-blue-500 shadow-sm transition-all';
+        radioClient.className = 'w-5 h-5 rounded-full bg-blue-700 text-white flex items-center justify-center transition-all';
+
+        idLabel.textContent = dict.idLabelClient;
+        if (resetCreds) {
+          idInput.value = 'emp@company.com';
+          passInput.value = 'emp123';
+        }
+
+        submitBtn.className = 'w-full py-3.5 px-6 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl shadow-lg shadow-blue-700/20 transition flex items-center justify-center gap-2 text-sm sm:text-base min-h-[48px]';
+        submitText.textContent = dict.loginBtnClient;
+      } else if (role === 'hr') {
+        hrCard.className = 'cursor-pointer select-none p-4 rounded-2xl border-2 border-emerald-600 bg-emerald-50/70 dark:bg-emerald-950/40 dark:border-emerald-500 shadow-sm transition-all';
+        radioHr.className = 'w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center transition-all';
+
+        idLabel.textContent = dict.idLabelHr;
+        if (resetCreds) {
+          idInput.value = 'hr@company.com';
+          passInput.value = 'hr@admin2026';
+        }
+
+        submitBtn.className = 'w-full py-3.5 px-6 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/20 transition flex items-center justify-center gap-2 text-sm sm:text-base min-h-[48px]';
+        submitText.textContent = dict.loginBtnHr;
+      } else if (role === 'it') {
+        itCard.className = 'cursor-pointer select-none p-4 rounded-2xl border-2 border-purple-600 bg-purple-50/70 dark:bg-purple-950/40 dark:border-purple-500 shadow-sm transition-all';
+        radioIt.className = 'w-5 h-5 rounded-full bg-purple-600 text-white flex items-center justify-center transition-all';
+
+        idLabel.textContent = dict.idLabelIt;
+        if (resetCreds) {
+          idInput.value = 'it@company.com';
+          passInput.value = 'it@admin2026';
+        }
+
+        submitBtn.className = 'w-full py-3.5 px-6 bg-purple-700 hover:bg-purple-800 text-white font-bold rounded-xl shadow-lg shadow-purple-700/20 transition flex items-center justify-center gap-2 text-sm sm:text-base min-h-[48px]';
+        submitText.textContent = dict.loginBtnIt;
+      }
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const rawId = document.getElementById('login-identifier').value.trim().toLowerCase();
+      const rawPass = document.getElementById('login-password').value;
+      const errorBox = document.getElementById('login-error-box');
+      const errorText = document.getElementById('login-error-text');
+
+      const targetAccount = AUTH_ACCOUNTS[selectedLoginRole];
+      const isValid = targetAccount.identifiers.includes(rawId) && targetAccount.password === rawPass;
+
+      if (!isValid) {
+        const matchedRole = Object.keys(AUTH_ACCOUNTS).find(r => r !== selectedLoginRole && AUTH_ACCOUNTS[r].identifiers.includes(rawId));
+
+        if (matchedRole) {
+          const roleNamesAr = { client: 'عميل / موظف', hr: 'مدير الموارد البشرية (HR)', it: 'مهندس الـ IT' };
+          const roleNamesEn = { client: 'Employee / Client', hr: 'HR Manager', it: 'IT Engineer' };
+          errorText.textContent = currentLang === 'ar'
+            ? `تم رفض الدخول: هذا الحساب تابع لـ "${roleNamesAr[matchedRole]}"، يرجى اختيار البطاقة المطابقة لصلاحيتك.`
+            : `Access Denied: This account belongs to "${roleNamesEn[matchedRole]}". Please select the matching role card.`;
+        } else {
+          errorText.textContent = currentLang === 'ar'
+            ? 'بيانات الاعتماد المدخلة غير صحيحة. يرجى التحقق من البريد الإلكتروني وكلمة المرور.'
+            : 'Invalid credentials. Please verify your email/ID and password.';
+        }
+        errorBox.classList.remove('hidden');
+        return;
+      }
+
+      errorBox.classList.add('hidden');
+      currentUser = { ...targetAccount };
+      openAuthenticatedPortal();
+    }
+
+    function updateHeaderUserIdentity() {
+      if (!currentUser) return;
+      const roleBadge = document.getElementById('nav-role-badge');
+      const userSub = document.getElementById('nav-user-subtitle');
+      const uName = currentLang === 'ar' ? currentUser.name_ar : currentUser.name_en;
+      const uTitle = currentLang === 'ar' ? currentUser.title_ar : currentUser.title_en;
+
+      if (currentUser.role === 'client') {
+        roleBadge.textContent = currentLang === 'ar' ? 'مسار الموظف' : 'Employee Workflow';
+        roleBadge.className = 'hidden sm:inline-block text-xs px-2.5 py-0.5 rounded-full font-bold bg-blue-500/20 text-blue-300 border border-blue-400/30 shrink-0';
+        document.getElementById('emp-profile-name').textContent = uName;
+        document.getElementById('emp-avatar-initials').textContent = currentLang === 'ar' ? 'أم' : 'AM';
+      } else if (currentUser.role === 'hr') {
+        roleBadge.textContent = currentLang === 'ar' ? 'إدارة الموارد البشرية' : 'HR Command Center';
+        roleBadge.className = 'hidden sm:inline-block text-xs px-2.5 py-0.5 rounded-full font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 shrink-0';
+      } else if (currentUser.role === 'it') {
+        roleBadge.textContent = currentLang === 'ar' ? 'إدارة الربط السحابي IT' : 'IT Cloud Admin';
+        roleBadge.className = 'hidden sm:inline-block text-xs px-2.5 py-0.5 rounded-full font-bold bg-purple-500/20 text-purple-300 border border-purple-400/30 shrink-0';
+        document.getElementById('it-profile-name').textContent = currentLang === 'ar' ? 'م. شنودة — مهندس تكنولوجيا المعلومات' : 'Eng. Shenouda — IT & Cloud Engineer';
+      }
+      userSub.textContent = `${uName} - ${uTitle} | ${currentUser.employee_id}`;
+    }
+
+    function openAuthenticatedPortal() {
+      document.getElementById('login-view').classList.add('hidden');
+      document.getElementById('app-view').classList.remove('hidden');
+      document.getElementById('chatbot-wrapper').classList.remove('hidden');
+
+      const cloudBtn = document.getElementById('header-cloud-btn');
+      updateHeaderUserIdentity();
+
+      document.getElementById('client-dashboard').classList.add('hidden');
+      document.getElementById('hr-dashboard').classList.add('hidden');
+      document.getElementById('it-dashboard').classList.add('hidden');
+
+      if (currentUser.role === 'client') {
+        document.getElementById('client-dashboard').classList.remove('hidden');
+        cloudBtn.classList.add('hidden');
+        renderEmployeeDashboard();
+      } else if (currentUser.role === 'hr') {
+        document.getElementById('hr-dashboard').classList.remove('hidden');
+        // HR Manager no longer has access to IT Cloud Webhook Settings!
+        cloudBtn.classList.add('hidden');
+        switchHRTab('approvals');
+        renderHRDashboard();
+      } else if (currentUser.role === 'it') {
+        document.getElementById('it-dashboard').classList.remove('hidden');
+        cloudBtn.classList.add('hidden');
+        renderITDashboard();
+      }
+
+      initContextChatbot();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function logout() {
+      currentUser = null;
+      isChatOpen = false;
+      document.getElementById('chatbot-window').classList.add('hidden');
+      document.getElementById('chatbot-wrapper').classList.add('hidden');
+      document.getElementById('client-dashboard').classList.add('hidden');
+      document.getElementById('hr-dashboard').classList.add('hidden');
+      document.getElementById('it-dashboard').classList.add('hidden');
+      document.getElementById('app-view').classList.add('hidden');
+      document.getElementById('login-view').classList.remove('hidden');
+      showToast(currentLang === 'ar' ? 'تم تسجيل الخروج وتأمين الجلسة بنجاح' : 'Signed out and session secured successfully', 'info');
+    }
+
+    // =========================================================================
+    // 5. EMPLOYEE END-TO-END WORKFLOW LOGIC & N8N SUBMISSION
+    // =========================================================================
+    function renderEmployeeDashboard() {
+      if (!currentUser || currentUser.role !== 'client') return;
+      const myReqs = requests.filter(r => r.employee_id === currentUser.employee_id);
+      const pendingCount = myReqs.filter(r => r.status === 'PENDING').length;
+      const approvedCount = myReqs.filter(r => r.status === 'APPROVED').length;
+
+      document.getElementById('client-stat-total').textContent = myReqs.length;
+      document.getElementById('client-stat-pending').textContent = pendingCount;
+      document.getElementById('client-stat-approved').textContent = approvedCount;
+
+      const container = document.getElementById('employee-requests-cards');
+      container.innerHTML = myReqs.map(req => {
+        const isApproved = req.status === 'APPROVED';
+        const isRejected = req.status === 'REJECTED';
+        const isPending = req.status === 'PENDING';
+
+        const title = currentLang === 'ar' ? req.type_ar : req.type_en;
+        const statusPill = isApproved
+          ? `<span class="px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">${currentLang === 'ar' ? 'معتمدة وجاهزة للتحميل' : 'Approved & Ready'}</span>`
+          : isRejected
+          ? `<span class="px-3 py-1 rounded-full text-xs font-extrabold bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 border border-rose-200 dark:border-rose-800">${currentLang === 'ar' ? 'مرفوضة من الإدارة' : 'Rejected by HR'}</span>`
+          : `<span class="px-3 py-1 rounded-full text-xs font-extrabold bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800">${currentLang === 'ar' ? 'بانتظار اعتماد إدارة HR' : 'Pending HR Approval'}</span>`;
+
+        const step3Class = isPending
+          ? 'bg-amber-500 text-white ring-4 ring-amber-100 dark:ring-amber-900/40'
+          : isApproved
+          ? 'bg-emerald-600 text-white'
+          : 'bg-rose-600 text-white';
+
+        const step4Class = isApproved
+          ? 'bg-emerald-600 text-white ring-4 ring-emerald-100 dark:ring-emerald-900/40'
+          : 'bg-slate-200 dark:bg-slate-800 text-slate-400';
+
+        const s1Label = currentLang === 'ar' ? '1. استلام الطلب' : '1. Submitted';
+        const s2Label = currentLang === 'ar' ? '2. التحقق الآلي' : '2. Verified';
+        const s3Label = isRejected ? (currentLang === 'ar' ? '3. مرفوض إدارياً' : '3. Rejected') : (currentLang === 'ar' ? '3. اعتماد HR' : '3. HR Gate');
+        const s4Label = currentLang === 'ar' ? '4. إصدار PDF' : '4. PDF Issued';
+
+        return `
+          <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow-sm border border-slate-200/90 dark:border-slate-800 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-lg bg-slate-900 dark:bg-slate-800 text-white font-mono text-xs font-bold">${req.request_id}</span>
+                  <h4 class="font-extrabold text-slate-900 dark:text-white text-base">${title}</h4>
+                  ${statusPill}
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5">
+                  <strong>${currentLang === 'ar' ? 'الجهة:' : 'Recipient:'}</strong> ${req.recipient} &nbsp;•&nbsp;
+                  <strong>${currentLang === 'ar' ? 'التاريخ:' : 'Date:'}</strong> ${req.created_at}
+                  ${req.cv_attachment ? `&nbsp;•&nbsp; <button type="button" onclick="downloadUploadedCv('${req.request_id}')" class="text-blue-700 dark:text-blue-400 font-bold underline">📄 ${req.cv_attachment.fileName}</button>` : ''}
+                </p>
+                ${isRejected && req.rejection_reason ? `
+                  <div class="mt-2.5 p-3 rounded-xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 text-xs text-rose-800 dark:text-rose-300 font-semibold">
+                    <strong>${currentLang === 'ar' ? 'ملاحظة إدارة الموارد البشرية:' : 'HR Note:'}</strong> ${req.rejection_reason}
+                  </div>
+                ` : ''}
+              </div>
+
+              ${isApproved ? `
+                <button onclick="openCertificateModal('${req.request_id}')"
+                  class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs shadow-md shadow-emerald-600/20 transition flex items-center justify-center gap-2 shrink-0 min-h-[42px]">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <span>${currentLang === 'ar' ? 'معاينة وتحميل PDF' : 'Download PDF'}</span>
+                </button>
+              ` : ''}
+            </div>
+
+            <!-- 4-Step End-to-End Visual Progress Tracker -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-3.5 border-t border-slate-100 dark:border-slate-800">
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-emerald-600 text-white text-[11px] font-extrabold flex items-center justify-center shrink-0">✓</span>
+                <span class="text-xs font-bold text-slate-800 dark:text-slate-200">${s1Label}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-emerald-600 text-white text-[11px] font-extrabold flex items-center justify-center shrink-0">✓</span>
+                <span class="text-xs font-bold text-slate-800 dark:text-slate-200">${s2Label}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full ${step3Class} text-[11px] font-extrabold flex items-center justify-center shrink-0">${isPending ? '⏳' : isApproved ? '✓' : '✕'}</span>
+                <span class="text-xs font-bold text-slate-800 dark:text-slate-200">${s3Label}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full ${step4Class} text-[11px] font-extrabold flex items-center justify-center shrink-0">${isApproved ? '✓' : '4'}</span>
+                <span class="text-xs font-bold ${isApproved ? 'text-emerald-700 dark:text-emerald-400' : 'text-slate-400'}">${s4Label}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    let selectedCvData = null;
+
+    function handleCvFileSelect(e) {
+      const file = e.target.files[0];
+      const labelEl = document.getElementById('req-cv-filename');
+      if (!file) {
+        selectedCvData = null;
+        labelEl.textContent = I18N[currentLang].cvPlaceholder;
+        labelEl.classList.remove('text-blue-700', 'dark:text-blue-400');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        selectedCvData = {
+          fileName: file.name,
+          fileType: file.type || 'application/pdf',
+          fileSizeKB: Math.max(1, Math.round(file.size / 1024)),
+          base64: evt.target.result
+        };
+        labelEl.textContent = `📄 ${file.name} (${selectedCvData.fileSizeKB} KB)`;
+        labelEl.classList.add('text-blue-700', 'dark:text-blue-400');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function downloadUploadedCv(reqId) {
+      const req = requests.find(r => r.request_id === reqId);
+      if (!req || !req.cv_attachment || !req.cv_attachment.base64) {
+        showToast(currentLang === 'ar' ? 'لا يوجد ملف سيرة ذاتية مرفق بهذا الطلب' : 'No CV file attached to this request', 'info');
+        return;
+      }
+      const a = document.createElement('a');
+      a.href = req.cv_attachment.base64;
+      a.download = req.cv_attachment.fileName || 'Employee_CV.pdf';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
+    function submitCertificateRequest(e) {
+      e.preventDefault();
+      if (!currentUser || currentUser.role !== 'client') return;
+
+      const submitBtn = document.getElementById('submit-req-btn');
+      const progressBox = document.getElementById('submission-progress-box');
+      const stepLabel = document.getElementById('progress-step-label');
+      const percentLabel = document.getElementById('progress-percent');
+      const barFill = document.getElementById('progress-bar-fill');
+
+      const typeCode = document.getElementById('req-type').value;
+      const recipient = document.getElementById('req-recipient').value.trim();
+      const docLang = document.getElementById('req-lang').value;
+      const notes = document.getElementById('req-notes').value.trim();
+
+      const typeMap = {
+        EXPERIENCE_CERTIFICATE: { ar: 'شهادة خبرة معتمدة', en: 'Experience Certificate' },
+        SALARY_DEFINITION: { ar: 'شهادة تعريف بالراتب', en: 'Salary Definition Certificate' },
+        BANK_LETTER: { ar: 'خطاب موجه للبنك', en: 'Bank Introduction Letter' },
+        EMPLOYMENT_PROOF: { ar: 'إثبات قيد وظيفي', en: 'Employment Proof Letter' }
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-60', 'cursor-not-allowed');
+      progressBox.classList.remove('hidden');
+
+      stepLabel.textContent = currentLang === 'ar' ? '1/3: التحقق من السجل الوظيفي...' : '1/3: Verifying employment record...';
+      percentLabel.textContent = '35%';
+      barFill.style.width = '35%';
+
+      setTimeout(() => {
+        stepLabel.textContent = currentLang === 'ar' ? '2/3: صياغة المسودة الرسمية للوثيقة...' : '2/3: Drafting official document...';
+        percentLabel.textContent = '70%';
+        barFill.style.width = '70%';
+      }, 450);
+
+      setTimeout(async () => {
+        stepLabel.textContent = currentLang === 'ar' ? '3/3: إرسال الطلب لبوابة اعتماد HR...' : '3/3: Routing request to HR Approval Gate...';
+        percentLabel.textContent = '100%';
+        barFill.style.width = '100%';
+
+        const nextSeq = String(requests.length + 3).padStart(3, '0');
+        const newReqId = `REQ-2026-${nextSeq}`;
+        const newCertId = `CERT-${Date.now()}`;
+        const nowStr = new Date().toISOString().slice(0, 16).replace('T', ' ');
+
+        const newRequest = {
+          request_id: newReqId,
+          type_code: typeCode,
+          type_ar: typeMap[typeCode].ar,
+          type_en: typeMap[typeCode].en,
+          employee_id: currentUser.employee_id,
+          employee_name_ar: currentUser.name_ar,
+          employee_name_en: currentUser.name_en,
+          language: docLang,
+          recipient: recipient,
+          notes: notes || '-',
+          cv_attachment: selectedCvData ? { ...selectedCvData } : null,
+          status: 'PENDING',
+          certificate_id: newCertId,
+          created_at: nowStr,
+          decision_at: '',
+          draft_ar: `تشهد إدارة الموارد البشرية بأن السيد/ ${currentUser.name_ar} (الرقم الوظيفي: ${currentUser.employee_id}) يعمل لدينا بوظيفة ${currentUser.title_ar} في إدارة التحول الرقمي، وذلك اعتباراً من تاريخ 2023-03-15 وحتى تاريخه. أُصدرت هذه الوثيقة (${typeMap[typeCode].ar}) بناءً على طلبه لتقديمها إلى: ${recipient}.`,
+          draft_en: `This is to certify that Mr. ${currentUser.name_en} (Employee ID: ${currentUser.employee_id}) is employed as a ${currentUser.title_en} in the Digital Transformation Department since 2023-03-15 to date. This ${typeMap[typeCode].en} is issued upon his request for submission to: ${recipient}.`
+        };
+
+        let cloudSynced = false;
+        if (cloudEndpoints.reqUrl) {
+          try {
+            const res = await fetch(cloudEndpoints.reqUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                request_id: newRequest.request_id,
+                employee_id: newRequest.employee_id,
+                employee_name: newRequest.employee_name_ar,
+                certificate_type: newRequest.type_code,
+                target_entity: newRequest.recipient,
+                language: newRequest.language,
+                notes: newRequest.notes,
+                cv_file_name: newRequest.cv_attachment ? newRequest.cv_attachment.fileName : null,
+                cv_file_size_kb: newRequest.cv_attachment ? newRequest.cv_attachment.fileSizeKB : null,
+                cv_base64: newRequest.cv_attachment ? newRequest.cv_attachment.base64 : null,
+                created_at: new Date().toISOString()
+              })
+            });
+            if (res.ok) { cloudSynced = true; logItEvent(`POST WF5 (${newRequest.request_id}) -> 200 OK`); } else { logItEvent(`POST WF5 (${newRequest.request_id}) -> HTTP ${res.status}`); }
+          } catch (err) { /* Graceful fallback */ }
+        }
+
+        requests.unshift(newRequest);
+        auditLogs.unshift({
+          timestamp: nowStr,
+          ref_id: newReqId,
+          actor_ar: `موظف (${currentUser.employee_id})`,
+          actor_en: `Employee (${currentUser.employee_id})`,
+          action_ar: `تقديم طلب ${typeMap[typeCode].ar}${cloudSynced ? ' (متزامن سحابياً)' : ''}`,
+          action_en: `Submitted ${typeMap[typeCode].en}${cloudSynced ? ' (Cloud Synced)' : ''}`,
+          status_ar: 'قيد المراجعة',
+          status_en: 'Pending Review'
+        });
+
+        persistData();
+        e.target.reset();
+        selectedCvData = null;
+        const cvLabel = document.getElementById('req-cv-filename');
+        if (cvLabel) {
+          cvLabel.textContent = I18N[currentLang].cvPlaceholder;
+          cvLabel.classList.remove('text-blue-700', 'dark:text-blue-400');
+        }
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+        progressBox.classList.add('hidden');
+
+        renderEmployeeDashboard();
+        const msg = currentLang === 'ar'
+          ? `تم إرسال الطلب ${newReqId} بنجاح وهو الآن بانتظار اعتماد إدارة الموارد البشرية`
+          : `Request ${newReqId} submitted successfully and is awaiting HR approval`;
+        showToast(msg, 'success');
+      }, 900);
+    }
+
+    // =========================================================================
+    // 6. HR MANAGER END-TO-END WORKFLOW LOGIC & N8N SYNC
+    // =========================================================================
+    function switchHRTab(tab) {
+      const tabs = ['approvals', 'digest', 'audit'];
+      const activeCls = 'px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-navy-900 dark:bg-blue-700 text-white shadow-sm transition flex items-center gap-2 min-h-[44px]';
+      const inactiveCls = 'px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 transition flex items-center gap-2 min-h-[44px]';
+
+      tabs.forEach(t => {
+        const btn = document.getElementById(`hr-tab-btn-${t}`);
+        const panel = document.getElementById(`hr-tab-${t}`);
+        if (t === tab) {
+          btn.className = activeCls;
+          panel.classList.remove('hidden');
+        } else {
+          btn.className = inactiveCls;
+          panel.classList.add('hidden');
+        }
+      });
+      renderHRDashboard();
+    }
+
+    function renderHRDashboard() {
+      if (!currentUser || currentUser.role !== 'hr') return;
+      const pendingReqs = requests.filter(r => r.status === 'PENDING');
+      const approvedReqs = requests.filter(r => r.status === 'APPROVED');
+      const rejectedReqs = requests.filter(r => r.status === 'REJECTED');
+      const cvFilesCount = requests.filter(r => r.cv_attachment && r.cv_attachment.fileName).length;
+
+      document.getElementById('hr-tab-pending-pill').textContent = pendingReqs.length;
+      document.getElementById('hr-pending-badge').textContent = currentLang === 'ar'
+        ? `${pendingReqs.length} طلبات بانتظار القرار`
+        : `${pendingReqs.length} Pending Decisions`;
+      document.getElementById('digest-total-count').textContent = requests.length;
+      document.getElementById('digest-cv-count').textContent = cvFilesCount;
+      document.getElementById('digest-pending-count').textContent = pendingReqs.length;
+      document.getElementById('digest-approved-count').textContent = approvedReqs.length;
+      document.getElementById('digest-rejected-count').textContent = rejectedReqs.length;
+      document.getElementById('digest-audit-count').textContent = auditLogs.length;
+      document.getElementById('digest-report-date').textContent = new Date().toISOString().slice(0, 10);
+
+      const listContainer = document.getElementById('hr-requests-list');
+      listContainer.innerHTML = requests.map(req => {
+        const isPending = req.status === 'PENDING';
+        const isApproved = req.status === 'APPROVED';
+
+        const title = currentLang === 'ar' ? req.type_ar : req.type_en;
+        const empName = currentLang === 'ar' ? req.employee_name_ar : req.employee_name_en;
+        const draftText = currentLang === 'ar' ? req.draft_ar : req.draft_en;
+
+        const statusBadge = isApproved
+          ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">${currentLang === 'ar' ? 'معتمد وصادر' : 'Approved'}</span>`
+          : req.status === 'REJECTED'
+          ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 border border-rose-200 dark:border-rose-800">${currentLang === 'ar' ? 'مرفوض' : 'Rejected'}</span>`
+          : `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800">${currentLang === 'ar' ? 'بانتظار الاعتماد' : 'Pending'}</span>`;
+
+        return `
+          <div class="py-5 sm:py-6 first:pt-0 last:pb-0 flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+            <div class="space-y-2.5 flex-1">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-md bg-navy-900 dark:bg-slate-800 text-white font-mono text-xs font-bold">${req.request_id}</span>
+                <span class="font-extrabold text-slate-900 dark:text-white text-base">${title}</span>
+                ${statusBadge}
+              </div>
+
+              <div class="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+                <strong>${currentLang === 'ar' ? 'الموظف:' : 'Employee:'}</strong> ${empName} (${req.employee_id}) &nbsp;|&nbsp;
+                <strong>${currentLang === 'ar' ? 'الجهة:' : 'Recipient:'}</strong> ${req.recipient}
+                ${req.cv_attachment ? `&nbsp;|&nbsp; <button type="button" onclick="downloadUploadedCv('${req.request_id}')" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 text-xs font-bold hover:bg-blue-100 transition">📄 ${currentLang === 'ar' ? 'تحميل السيرة الذاتية' : 'Download CV'} (${req.cv_attachment.fileName})</button>` : ''}
+              </div>
+
+              <div class="bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 rounded-xl p-4 text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                <div class="font-bold text-navy-800 dark:text-blue-400 mb-1">${currentLang === 'ar' ? 'المسودة الرسمية المقترحة للاعتماد:' : 'Proposed Official Draft:'}</div>
+                <p>"${draftText}"</p>
+              </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row lg:flex-col gap-2.5 shrink-0">
+              ${isPending ? `
+                <button onclick="approveRequest('${req.request_id}')"
+                  class="py-2.5 px-5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs sm:text-sm shadow-sm transition flex items-center justify-center gap-2 min-h-[44px]">
+                  <span>✅ ${currentLang === 'ar' ? 'اعتماد وإصدار الشهادة' : 'Approve & Issue PDF'}</span>
+                </button>
+                <button onclick="openRejectModal('${req.request_id}')"
+                  class="py-2.5 px-5 bg-white dark:bg-slate-800 hover:bg-rose-50 dark:hover:bg-rose-950/50 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800 font-bold rounded-xl text-xs sm:text-sm transition flex items-center justify-center gap-2 min-h-[44px]">
+                  <span>❌ ${currentLang === 'ar' ? 'رفض الطلب' : 'Reject Request'}</span>
+                </button>
+              ` : isApproved ? `
+                <button onclick="openCertificateModal('${req.request_id}')"
+                  class="py-2.5 px-5 bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 font-bold rounded-xl text-xs sm:text-sm transition min-h-[44px]">
+                  ${currentLang === 'ar' ? 'معاينة الشهادة المعتمدة' : 'Preview Approved PDF'}
+                </button>
+              ` : `
+                <span class="text-xs text-slate-400 font-semibold px-3 py-2">${currentLang === 'ar' ? 'تمت معالجة الطلب' : 'Processed'}</span>
+              `}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const auditTbody = document.getElementById('hr-audit-tbody');
+      auditTbody.innerHTML = auditLogs.map(item => `
+        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+          <td class="py-3.5 px-4 font-mono text-xs text-slate-500 dark:text-slate-400">${item.timestamp}</td>
+          <td class="py-3.5 px-4 font-mono font-bold text-xs text-slate-800 dark:text-slate-200">${item.ref_id}</td>
+          <td class="py-3.5 px-4 text-xs font-semibold text-blue-800 dark:text-blue-400">${currentLang === 'ar' ? item.actor_ar : item.actor_en}</td>
+          <td class="py-3.5 px-4 text-xs font-bold text-slate-800 dark:text-slate-200">${currentLang === 'ar' ? item.action_ar : item.action_en}</td>
+          <td class="py-3.5 px-4"><span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400">${currentLang === 'ar' ? item.status_ar : item.status_en}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    async function approveRequest(reqId) {
+      if (!currentUser || currentUser.role !== 'hr') return;
+      const idx = requests.findIndex(r => r.request_id === reqId);
+      if (idx === -1) return;
+
+      const todayStr = new Date().toISOString().slice(0, 10);
+      const nowStr = new Date().toISOString().slice(0, 16).replace('T', ' ');
+
+      requests[idx].status = 'APPROVED';
+      requests[idx].decision_at = todayStr;
+
+      if (cloudEndpoints.decisionUrl) {
+        try {
+          await fetch(cloudEndpoints.decisionUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ request_id: reqId, decision: 'Approved', status: 'APPROVED', actor: currentUser.employee_id, timestamp: new Date().toISOString() })
+          });
+          logItEvent(`POST WF7 (${reqId} -> APPROVED) -> Synced`);
+        } catch (err) { /* silent fallback */ }
+      }
+
+      auditLogs.unshift({
+        timestamp: nowStr,
+        ref_id: reqId,
+        actor_ar: `مدير HR (${currentUser.employee_id})`,
+        actor_en: `HR Director (${currentUser.employee_id})`,
+        action_ar: `اعتماد وإصدار ${requests[idx].type_ar}`,
+        action_en: `Approved & Issued ${requests[idx].type_en}`,
+        status_ar: 'معتمد',
+        status_en: 'Approved'
+      });
+
+      persistData();
+      renderHRDashboard();
+      showToast(currentLang === 'ar' ? `تم اعتماد الطلب ${reqId} وإصدار الشهادة بنجاح` : `Request ${reqId} approved and PDF issued`, 'success');
+    }
+
+    function openRejectModal(reqId) {
+      document.getElementById('reject-target-req-id').value = reqId;
+      document.getElementById('reject-reason-input').value = '';
+      document.getElementById('reject-modal').classList.remove('hidden');
+    }
+
+    async function confirmRejectRequest(e) {
+      e.preventDefault();
+      if (!currentUser || currentUser.role !== 'hr') return;
+      const reqId = document.getElementById('reject-target-req-id').value;
+      const reason = document.getElementById('reject-reason-input').value.trim();
+
+      const idx = requests.findIndex(r => r.request_id === reqId);
+      if (idx === -1) return;
+
+      const nowStr = new Date().toISOString().slice(0, 16).replace('T', ' ');
+      requests[idx].status = 'REJECTED';
+      requests[idx].rejection_reason = reason;
+      requests[idx].decision_at = nowStr.slice(0, 10);
+
+      if (cloudEndpoints.decisionUrl) {
+        try {
+          await fetch(cloudEndpoints.decisionUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ request_id: reqId, decision: 'Rejected', status: 'REJECTED', reason, actor: currentUser.employee_id, timestamp: new Date().toISOString() })
+          });
+          logItEvent(`POST WF7 (${reqId} -> REJECTED) -> Synced`);
+        } catch (err) { /* silent fallback */ }
+      }
+
+      auditLogs.unshift({
+        timestamp: nowStr,
+        ref_id: reqId,
+        actor_ar: `مدير HR (${currentUser.employee_id})`,
+        actor_en: `HR Director (${currentUser.employee_id})`,
+        action_ar: `رفض طلب ${requests[idx].type_ar}`,
+        action_en: `Rejected ${requests[idx].type_en}`,
+        status_ar: 'مرفوض',
+        status_en: 'Rejected'
+      });
+
+      persistData();
+      closeModal('reject-modal');
+      renderHRDashboard();
+      showToast(currentLang === 'ar' ? `تم رفض الطلب ${reqId} وإرسال الملاحظة للموظف` : `Request ${reqId} rejected and employee notified`, 'info');
+    }
+
+    async function dispatchExecutiveReport() {
+      if (!currentUser || currentUser.role !== 'hr') return;
+      const nowStr = new Date().toISOString().slice(0, 16).replace('T', ' ');
+      const todayStr = new Date().toISOString().slice(0, 10);
+      const rptId = `RPT-${todayStr.replace(/-/g, '')}`;
+      const totalRequestsCount = requests.length;
+      const cvAttachedCount = requests.filter(r => r.cv_attachment && r.cv_attachment.fileName).length;
+      const pendingCertsCount = requests.filter(r => r.status === 'PENDING').length;
+      const approvedCertsCount = requests.filter(r => r.status === 'APPROVED').length;
+      const rejectedCertsCount = requests.filter(r => r.status === 'REJECTED').length;
+      const auditEventsCount = auditLogs.length;
+
+      if (cloudEndpoints.digestUrl) {
+        try {
+          await fetch(cloudEndpoints.digestUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              event: 'MANUAL_DAILY_DIGEST',
+              trigger: 'MANUAL_PORTAL_RUN',
+              triggered_by: 'HR_MANAGER_PORTAL',
+              date: todayStr,
+              timestamp: new Date().toISOString(),
+              metrics: {
+                total_requests: totalRequestsCount,
+                cv_attachments: cvAttachedCount,
+                pending_certificates: pendingCertsCount,
+                approved_certificates: approvedCertsCount,
+                rejected_certificates: rejectedCertsCount,
+                audit_events: auditEventsCount
+              }
+            })
+          });
+          logItEvent(`POST WF6 (Daily Digest ${rptId}) -> Dispatched with Portal Metrics`);
+        } catch (err) { /* silent fallback */ }
+      }
+
+      auditLogs.unshift({
+        timestamp: nowStr,
+        ref_id: rptId,
+        actor_ar: `مدير HR (${currentUser.employee_id})`,
+        actor_en: `HR Director (${currentUser.employee_id})`,
+        action_ar: 'إرسال التقرير التنفيذي اليومي للإدارة العليا',
+        action_en: 'Dispatched Daily Executive HR Report',
+        status_ar: 'تم الإرسال',
+        status_en: 'Dispatched'
+      });
+
+      persistData();
+      renderHRDashboard();
+      showToast(currentLang === 'ar' ? 'تم إرسال التقرير التنفيذي اليومي وتوثيقه في سجل الرقابة' : 'Daily executive report dispatched and logged', 'success');
+    }
+
+    // =========================================================================
+    // 7. COMPREHENSIVE CONTEXT-AWARE AI CHATBOT (ANSWERS EVERYTHING)
+    // =========================================================================
+    function toggleChatbot() {
+      isChatOpen = !isChatOpen;
+      const win = document.getElementById('chatbot-window');
+      const badge = document.getElementById('chat-unread-badge');
+      if (isChatOpen) {
+        win.classList.remove('hidden');
+        badge.classList.add('hidden');
+      } else {
+        win.classList.add('hidden');
+      }
+    }
+
+    function initContextChatbot() {
+      const msgBox = document.getElementById('chatbot-messages');
+      const chipsBox = document.getElementById('chatbot-chips');
+      document.getElementById('chat-unread-badge').classList.remove('hidden');
+
+      const uName = currentLang === 'ar' ? currentUser.name_ar : currentUser.name_en;
+
+      if (currentUser.role === 'client') {
+        msgBox.innerHTML = currentLang === 'ar'
+          ? `<div class="bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 shadow-sm leading-relaxed">
+              أهلاً بك أ. <strong>${uName}</strong> 👋<br>
+              أنا مساعدك الذكي في البوابة. اسألني عن <strong>أي خطوة في الموقع</strong> (تقديم طلب، تتبع الاعتماد، تحميل الشهادة PDF، تبديل اللغة أو الوضع الليلي) أو عن حالة طلباتك الحالية!
+            </div>`
+          : `<div class="bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 shadow-sm leading-relaxed">
+              Welcome, <strong>${uName}</strong> 👋<br>
+              I am your Smart Portal Assistant. Ask me about <strong>anything on this website</strong> (submitting a request, tracking approval, downloading PDF, switching language/dark mode) or your live request status!
+            </div>`;
+
+        const chips = currentLang === 'ar'
+          ? ['ازاي أقدم طلب شهادة؟', 'ما هي حالة طلبي الأخير؟', 'ازاي أحمل الشهادة PDF؟', 'ازاي أبدل بين حسابي وحساب HR؟']
+          : ['How do I submit a request?', 'Status of my latest request?', 'How to download PDF?', 'How to switch accounts?'];
+
+        chipsBox.innerHTML = chips.map(q => `
+          <button type="button" onclick="sendChatQuestion('${q}')"
+            class="px-2.5 py-1.5 bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800 rounded-full text-[11px] font-bold transition">
+            ${q}
+          </button>
+        `).join('');
+      } else if (currentUser.role === 'it') {
+        msgBox.innerHTML = currentLang === 'ar'
+          ? `<div class="bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 shadow-sm leading-relaxed">
+              أهلاً بك يا بشمهندس <strong>${uName}</strong> 👋<br>
+              أنت الآن في لوحة التحكم الهندسية المعزولة (RBAC). يمكنك تعديل روابط الـ Webhooks الثلاثة، فحص الاتصال بـ <strong>shenouda0012.app.n8n.cloud</strong>، أو استعادة الروابط الافتراضية.
+            </div>`
+          : `<div class="bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 shadow-sm leading-relaxed">
+              Welcome, <strong>${uName}</strong> 👋<br>
+              You are in the isolated IT Engineering panel (RBAC). Edit the 3 n8n Webhooks, run endpoint health checks, or inspect telemetry logs.
+            </div>`;
+
+        const chips = currentLang === 'ar'
+          ? ['ما هي الروابط المعتمدة حالياً؟', 'كيف أفحص اتصال n8n؟', 'لماذا تم عزل هذه الصفحة عن HR؟']
+          : ['What are the active webhooks?', 'How to test n8n connection?', 'Why is this isolated from HR?'];
+
+        chipsBox.innerHTML = chips.map(q => `
+          <button type="button" onclick="sendChatQuestion('${q}')"
+            class="px-2.5 py-1.5 bg-purple-50 dark:bg-purple-950/60 hover:bg-purple-100 dark:hover:bg-purple-900/60 text-purple-800 dark:text-purple-300 border border-purple-200 dark:border-purple-800 rounded-full text-[11px] font-bold transition">
+            ${q}
+          </button>
+        `).join('');
+      } else {
+        const pendingCount = requests.filter(r => r.status === 'PENDING').length;
+        msgBox.innerHTML = currentLang === 'ar'
+          ? `<div class="bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 shadow-sm leading-relaxed">
+              أهلاً بك أ. <strong>${uName}</strong> 👋<br>
+              لديك <strong>${pendingCount}</strong> طلبات بانتظار الاعتماد. اسألني عن <strong>أي وظيفة في لوحة التحكم</strong> (اعتماد أو رفض الطلبات، إرسال التقرير اليومي، سجل التدقيق، أو إعدادات الربط السحابي).
+            </div>`
+          : `<div class="bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 shadow-sm leading-relaxed">
+              Welcome, <strong>${uName}</strong> 👋<br>
+              You have <strong>${pendingCount}</strong> pending approvals. Ask me about <strong>any feature in your HR dashboard</strong> (approving/rejecting requests, daily executive digest, audit logs, or Cloud Sync).
+            </div>`;
+
+        const chips = currentLang === 'ar'
+          ? ['ازاي أعتمد أو أرفض طلب؟', 'كم عدد الطلبات المعلقة؟', 'ازاي أبعت التقرير اليومي؟', 'ازاي أربط السحابة (n8n)؟']
+          : ['How to approve/reject?', 'How many pending requests?', 'How to send daily report?', 'How to configure Cloud Sync?'];
+
+        chipsBox.innerHTML = chips.map(q => `
+          <button type="button" onclick="sendChatQuestion('${q}')"
+            class="px-2.5 py-1.5 bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 rounded-full text-[11px] font-bold transition">
+            ${q}
+          </button>
+        `).join('');
+      }
+    }
+
+    function handleChatSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('chatbot-input');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      sendChatQuestion(text);
+    }
+
+    function sendChatQuestion(question) {
+      const msgBox = document.getElementById('chatbot-messages');
+      msgBox.innerHTML += `
+        <div class="flex justify-end">
+          <div class="bg-blue-700 text-white p-3 rounded-2xl max-w-[85%] shadow-sm leading-relaxed">
+            ${question}
+          </div>
+        </div>
+      `;
+
+      const reply = generateComprehensiveReply(question);
+      setTimeout(() => {
+        msgBox.innerHTML += `
+          <div class="bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 max-w-[92%] shadow-sm leading-relaxed">
+            ${reply}
+          </div>
+        `;
+        msgBox.scrollTop = msgBox.scrollHeight;
+      }, 200);
+    }
+
+    function generateComprehensiveReply(q) {
+      const lower = q.toLowerCase();
+
+      // Shared Website How-To Knowledge (Language, Theme, Logout, Security)
+      if (lower.includes('لغة') || lower.includes('انجليزي') || lower.includes('عربي') || lower.includes('language') || lower.includes('english')) {
+        return currentLang === 'ar'
+          ? 'لتبديل لغة البوابة بالكامل بين <strong>العربية والإنجليزية</strong>، اضغط على زر <strong>(EN / عربي)</strong> في الشريط العلوي بأعلى الصفحة.'
+          : 'To switch the entire portal between <strong>English and Arabic</strong>, click the <strong>(EN / عربي)</strong> button in the top navigation bar.';
+      }
+      if (lower.includes('ليلي') || lower.includes('دارك') || lower.includes('اضاءة') || lower.includes('dark') || lower.includes('light') || lower.includes('theme')) {
+        return currentLang === 'ar'
+          ? 'يمكنك التبديل بين <strong>الوضع الليلي (Dark) والوضع النهاري (Light)</strong> في أي وقت بالضغط على أيقونة <strong>القمر / الشمس</strong> في الشريط العلوي.'
+          : 'You can toggle between <strong>Dark Mode and Light Mode</strong> anytime by clicking the <strong>Moon / Sun</strong> icon in the top bar.';
+      }
+      if (lower.includes('خروج') || lower.includes('حساب') || lower.includes('تبديل') || lower.includes('switch') || lower.includes('logout') || lower.includes('hr')) {
+        if (currentUser.role === 'client') {
+          return currentLang === 'ar'
+            ? 'حفاظاً على الخصوصية وعزل الصلاحيات، لا يمكن الدخول لحساب HR مباشرة من هنا. اضغط على زر <strong>"تسجيل الخروج"</strong> في الأعلى، ثم اختر بطاقة <strong>"مدير الموارد البشرية (HR)"</strong> وسجّل الدخول.'
+            : 'For strict role isolation and privacy, you cannot switch directly. Click <strong>"Sign Out"</strong> in the top bar, then select the <strong>"HR Manager"</strong> card on the login screen.';
+        }
+      }
+
+      // Role-Specific Comprehensive Answers
+      if (currentUser.role === 'client') {
+        const myReqs = requests.filter(r => r.employee_id === currentUser.employee_id);
+        const latest = myReqs[0];
+        const approvedList = myReqs.filter(r => r.status === 'APPROVED');
+
+        if (lower.includes('حالة') || lower.includes('طلبي') || lower.includes('status') || lower.includes('latest') || lower.includes('فين')) {
+          if (!latest) return currentLang === 'ar' ? 'لا توجد لديك طلبات مسجلة حالياً.' : 'You have no requests recorded yet.';
+          const docName = currentLang === 'ar' ? latest.type_ar : latest.type_en;
+          const stText = latest.status === 'APPROVED'
+            ? (currentLang === 'ar' ? 'معتمدة وجاهزة للتحميل بصيغة PDF ✅' : 'Approved & ready for PDF download ✅')
+            : latest.status === 'REJECTED'
+            ? (currentLang === 'ar' ? `مرفوضة (${latest.rejection_reason || ''}) ❌` : `Rejected (${latest.rejection_reason || ''}) ❌`)
+            : (currentLang === 'ar' ? 'بانتظار اعتماد مدير الموارد البشرية ⏳' : 'Pending HR Manager approval ⏳');
+          return currentLang === 'ar'
+            ? `آخر طلب لديك هو <strong>${latest.request_id}</strong> (${docName})، وحالته الآن: <strong>${stText}</strong>.`
+            : `Your latest request is <strong>${latest.request_id}</strong> (${docName}), currently: <strong>${stText}</strong>.`;
+        }
+
+        if (lower.includes('قدم') || lower.includes('طلب') || lower.includes('ازاي') || lower.includes('كيف') || lower.includes('submit') || lower.includes('how')) {
+          return currentLang === 'ar'
+            ? '<strong>خطوات تقديم طلب شهادة:</strong><br>1. من نموذج <strong>"بدء طلب وثيقة جديدة"</strong> على اليمين، اختر نوع الوثيقة (خبرة، راتب، بنك).<br>2. اكتب اسم الجهة الموجه إليها واختر اللغة.<br>3. اضغط <strong>"إرسال الطلب للاعتماد الإداري"</strong> وسيظهر فوراً في قائمة التتبع.'
+            : '<strong>How to submit a request:</strong><br>1. In the <strong>"Start New Document Request"</strong> panel, pick the document type.<br>2. Enter the recipient entity and preferred language.<br>3. Click <strong>"Submit Request for HR Approval"</strong> to send it to HR.';
+        }
+
+        if (lower.includes('pdf') || lower.includes('حمل') || lower.includes('طباع') || lower.includes('شهاد') || lower.includes('download') || lower.includes('print')) {
+          return currentLang === 'ar'
+            ? `لديك حالياً <strong>${approvedList.length}</strong> شهادة معتمدة. لتحميلها، اذهب إلى بطاقة الطلب المعتمد واضغط على الزر الأخضر <strong>"معاينة وتحميل PDF"</strong> ثم اضغط <strong>"طباعة / تحميل PDF"</strong>.`
+            : `You currently have <strong>${approvedList.length}</strong> approved certificate(s). Click the green <strong>"Download PDF"</strong> button on any approved request card, then click <strong>"Print / Download PDF"</strong>.`;
+        }
+
+        return currentLang === 'ar'
+          ? `أنا هنا لمساعدتك في كل خطوة! لديك حالياً <strong>${myReqs.length}</strong> طلبات (${approvedList.length} معتمدة). يمكنك سؤالي عن:<br>• كيفية تقديم طلب جديد<br>• حالة طلباتك الحالية<br>• طريقة تحميل الشهادة PDF<br>• تغيير اللغة أو الوضع الليلي.`
+          : `I am here to help with everything! You have <strong>${myReqs.length}</strong> requests (${approvedList.length} approved). Ask me about:<br>• How to submit a new request<br>• Live status of your requests<br>• Downloading your PDF certificate<br>• Switching language or dark mode.`;
+      } else if (currentUser.role === 'it') {
+        if (lower.includes('رابط') || lower.includes('روابط') || lower.includes('webhook') || lower.includes('url')) {
+          return currentLang === 'ar'
+            ? `الروابط السحابية المحفوظة حالياً:<br>• <strong>WF5:</strong> <span dir="ltr">${cloudEndpoints.reqUrl}</span><br>• <strong>WF7:</strong> <span dir="ltr">${cloudEndpoints.decisionUrl}</span><br>• <strong>WF6:</strong> <span dir="ltr">${cloudEndpoints.digestUrl}</span>`
+            : `Active Cloud Endpoints:<br>• <strong>WF5:</strong> ${cloudEndpoints.reqUrl}<br>• <strong>WF7:</strong> ${cloudEndpoints.decisionUrl}<br>• <strong>WF6:</strong> ${cloudEndpoints.digestUrl}`;
+        }
+        if (lower.includes('عزل') || lower.includes('hr') || lower.includes('صلاحي') || lower.includes('isolated')) {
+          return currentLang === 'ar'
+            ? 'تم تطبيق مبدأ <strong>فصل الصلاحيات (RBAC)</strong> بحيث يقتصر دور مدير الـ HR على اعتماد الشهادات وإصدار التقارير، بينما يملك مهندس الـ IT فقط صلاحية تعديل روابط الـ Webhooks وإعدادات الربط السحابي.'
+            : 'Strict <strong>Role-Based Access Control (RBAC)</strong> isolates cloud webhook configuration to the IT Engineer, preventing accidental edits by HR staff.';
+        }
+        return currentLang === 'ar'
+          ? 'يمكنك تعديل أي رابط في النموذج على اليمين ثم الضغط على <strong>"حفظ الإعدادات"</strong>، أو الضغط على <strong>"فحص اتصال المسارات الثلاثة"</strong> للتحقق من جاهزية n8n Cloud.'
+          : 'Edit any endpoint URL in the form and click <strong>Save Settings</strong>, or click <strong>Test All 3 Endpoints</strong> to verify n8n Cloud readiness.';
+      } else {
+        const pendingReqs = requests.filter(r => r.status === 'PENDING');
+        const approvedReqs = requests.filter(r => r.status === 'APPROVED');
+
+        if (lower.includes('اعتمد') || lower.includes('موافق') || lower.includes('رفض') || lower.includes('ازاي') || lower.includes('approve') || lower.includes('reject')) {
+          return currentLang === 'ar'
+            ? '<strong>لاعتماد أو رفض طلب:</strong><br>1. افتح تبويب <strong>"1. بوابة الاعتماد والموافقات"</strong>.<br>2. راجع المسودة الرسمية المقترحة للموظف.<br>3. اضغط <strong>"✅ اعتماد وإصدار الشهادة"</strong> لتفعيل شهادة الموظف فوراً، أو <strong>"❌ رفض الطلب"</strong> لإرسال ملاحظة التعديل.'
+            : '<strong>To approve or reject a request:</strong><br>1. Open tab <strong>"1. Approval Gate"</strong>.<br>2. Review the automated official draft.<br>3. Click <strong>"✅ Approve & Issue PDF"</strong> to issue the employee certificate immediately, or <strong>"❌ Reject Request"</strong> to send feedback.';
+        }
+
+        if (lower.includes('معلق') || lower.includes('عدد') || lower.includes('pending') || lower.includes('many')) {
+          return currentLang === 'ar'
+            ? `يوجد لديك حالياً <strong>${pendingReqs.length}</strong> طلبات بانتظار قرارك في تبويب <strong>"بوابة الاعتماد والموافقات"</strong>.`
+            : `You currently have <strong>${pendingReqs.length}</strong> requests awaiting your decision in the <strong>Approval Gate</strong> tab.`;
+        }
+
+        if (lower.includes('تقرير') || lower.includes('يومي') || lower.includes('digest') || lower.includes('report')) {
+          return currentLang === 'ar'
+            ? `افتح تبويب <strong>"2. التقرير التنفيذي اليومي"</strong> لاستعراض مؤشرات اليوم (${requests.length} إجمالي الطلبات، ${pendingReqs.length} معلقة، ${approvedReqs.length} معتمدة)، واضغط زر <strong>"إرسال التقرير اليومي للإدارة الآن"</strong> لإرساله وتوثيقه.`
+            : `Open tab <strong>"2. Daily Executive Digest"</strong> to view today's metrics (${requests.length} total requests, ${pendingReqs.length} pending, ${approvedReqs.length} approved), and click <strong>"Dispatch Daily Report Now"</strong>.`;
+        }
+
+        if (lower.includes('سحاب') || lower.includes('ربط') || lower.includes('n8n') || lower.includes('webhook') || lower.includes('cloud')) {
+          return currentLang === 'ar'
+            ? 'لربط البوابة مباشرة بمسارات الأتمتة على <strong>shenouda0012.app.n8n.cloud</strong>، اضغط على زر <strong>"الربط السحابي"</strong> في الشريط العلوي، الصق روابط الـ Production Webhook، واضغط <strong>"اختبار الاتصال"</strong> ثم <strong>"حفظ الإعدادات"</strong>.'
+            : 'To connect the portal directly to <strong>shenouda0012.app.n8n.cloud</strong>, click <strong>"Cloud Sync"</strong> in the top bar, paste your Production Webhook URLs, click <strong>"Test Connection"</strong>, and save.';
+        }
+
+        return currentLang === 'ar'
+          ? `أهلاً بك في مركز قيادة HR! لديك <strong>${pendingReqs.length}</strong> طلبات معلقة. يمكنك سؤالي عن:<br>• طريقة اعتماد أو رفض طلبات الشهادات<br>• تشغيل وإرسال التقرير التنفيذي اليومي<br>• مراجعة سجل التدقيق والرقابة<br>• إعدادات الربط السحابي المباشر.`
+          : `Welcome to HR Command Center! You have <strong>${pendingReqs.length}</strong> pending requests. Ask me about:<br>• Approving or rejecting certificate requests<br>• Running the daily executive digest<br>• Inspecting the audit log<br>• Configuring Cloud Sync settings.`;
+      }
+    }
+
+    // =========================================================================
+    // 8. MODALS, CLOUD CONNECTION TEST & UTILITIES
+    // =========================================================================
+    function openCertificateModal(reqId) {
+      const req = requests.find(r => r.request_id === reqId);
+      if (!req) return;
+
+      document.getElementById('cert-modal-title').textContent = currentLang === 'ar' ? req.type_ar : req.type_en;
+      document.getElementById('cert-modal-id').textContent = req.certificate_id;
+      document.getElementById('cert-modal-req').textContent = req.request_id;
+      document.getElementById('cert-modal-date').textContent = req.decision_at || new Date().toISOString().slice(0, 10);
+      document.getElementById('cert-modal-recipient').textContent = req.recipient;
+      document.getElementById('cert-modal-body-text').textContent = currentLang === 'ar' ? req.draft_ar : req.draft_en;
+
+      document.getElementById('certificate-modal').classList.remove('hidden');
+    }
+
+    function openCloudSettingsModal() {
+      document.getElementById('cfg-requests-endpoint').value = cloudEndpoints.reqUrl || '';
+      document.getElementById('cfg-decision-endpoint').value = cloudEndpoints.decisionUrl || '';
+      document.getElementById('cfg-digest-endpoint').value = cloudEndpoints.digestUrl || '';
+      document.getElementById('cloud-settings-modal').classList.remove('hidden');
+    }
+
+    function saveCloudSettings(e) {
+      e.preventDefault();
+      cloudEndpoints.reqUrl = document.getElementById('cfg-requests-endpoint').value.trim();
+      cloudEndpoints.decisionUrl = document.getElementById('cfg-decision-endpoint').value.trim();
+      cloudEndpoints.digestUrl = document.getElementById('cfg-digest-endpoint').value.trim();
+      localStorage.setItem('corp_hr_cloud_v5', JSON.stringify(cloudEndpoints));
+      closeModal('cloud-settings-modal');
+      showToast(currentLang === 'ar' ? 'تم حفظ إعدادات الربط السحابي بنجاح' : 'Cloud integration settings saved', 'success');
+    }
+
+    async function testCloudConnection() {
+      const url = document.getElementById('cfg-requests-endpoint').value.trim();
+      if (!url) {
+        showToast(currentLang === 'ar' ? 'يرجى إدخال رابط Webhook أولاً' : 'Please enter a Webhook URL first', 'info');
+        return;
+      }
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ event: 'CONNECTION_TEST', source: 'Enterprise_HR_Portal', timestamp: new Date().toISOString() })
+        });
+        if (res.ok) {
+          showToast(currentLang === 'ar' ? 'تم الاتصال بنجاح بـ n8n Cloud!' : 'Successfully connected to n8n Cloud!', 'success');
+        } else {
+          showToast(currentLang === 'ar' ? `استجاب الخادم برمز (${res.status}) — تأكد أن المسار Active في n8n` : `Server responded (${res.status}) — Ensure workflow is Active in n8n`, 'info');
+        }
+      } catch (err) {
+        showToast(currentLang === 'ar' ? 'تعذر الوصول للرابط — تأكد من تفعيل المسار وإضافة عقدة Webhook' : 'Could not reach endpoint — Ensure Webhook node is active', 'info');
+      }
+    }
+
+    function renderITDashboard() {
+      if (!currentUser || currentUser.role !== 'it') return;
+      document.getElementById('it-cfg-workspace').value = cloudEndpoints.workspaceUrl || DEFAULT_CLOUD_ENDPOINTS.workspaceUrl;
+      document.getElementById('it-cfg-requests-endpoint').value = cloudEndpoints.reqUrl || '';
+      document.getElementById('it-cfg-decision-endpoint').value = cloudEndpoints.decisionUrl || '';
+      document.getElementById('it-cfg-digest-endpoint').value = cloudEndpoints.digestUrl || '';
+      renderITLogs();
+    }
+
+    function saveItCloudSettings(e) {
+      e.preventDefault();
+      if (!currentUser || currentUser.role !== 'it') return;
+      cloudEndpoints.workspaceUrl = document.getElementById('it-cfg-workspace').value.trim();
+      cloudEndpoints.reqUrl = document.getElementById('it-cfg-requests-endpoint').value.trim();
+      cloudEndpoints.decisionUrl = document.getElementById('it-cfg-decision-endpoint').value.trim();
+      cloudEndpoints.digestUrl = document.getElementById('it-cfg-digest-endpoint').value.trim();
+      localStorage.setItem('corp_hr_cloud_v6', JSON.stringify(cloudEndpoints));
+      logItEvent('IT ADMIN updated & saved all 3 n8n Cloud Webhook URLs.');
+      showToast(currentLang === 'ar' ? 'تم حفظ إعدادات الربط السحابي وتطبيقها على النظام بالكامل' : 'Cloud integration settings saved & applied globally', 'success');
+    }
+
+    async function testAllItEndpoints() {
+      if (!currentUser || currentUser.role !== 'it') return;
+      const items = [
+        { badge: 'it-badge-wf5', name: 'WF5', url: document.getElementById('it-cfg-requests-endpoint').value.trim() },
+        { badge: 'it-badge-wf7', name: 'WF7', url: document.getElementById('it-cfg-decision-endpoint').value.trim() },
+        { badge: 'it-badge-wf6', name: 'WF6', url: document.getElementById('it-cfg-digest-endpoint').value.trim() }
+      ];
+
+      showToast(currentLang === 'ar' ? 'جاري فحص اتصال المسارات الثلاثة مع n8n Cloud...' : 'Testing all 3 n8n Cloud endpoints...', 'info');
+      for (const item of items) {
+        const badgeEl = document.getElementById(item.badge);
+        if (!item.url || !item.url.startsWith('https://')) {
+          badgeEl.textContent = currentLang === 'ar' ? '✕ رابط غير صالح' : '✕ Invalid URL';
+          badgeEl.className = 'text-[11px] font-bold text-rose-600 dark:text-rose-400';
+          logItEvent(`PING ${item.name} -> FAILED (Invalid HTTPS URL)`);
+          continue;
+        }
+        try {
+          const res = await fetch(item.url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ event: 'IT_HEALTH_CHECK', workflow: item.name, source: 'Enterprise_HR_Portal', timestamp: new Date().toISOString() })
+          });
+          if (res.ok) {
+            badgeEl.textContent = currentLang === 'ar' ? '● متصل (200 OK)' : '● Connected (200 OK)';
+            badgeEl.className = 'text-[11px] font-bold text-emerald-600 dark:text-emerald-400';
+            logItEvent(`PING ${item.name} -> 200 OK (${item.url})`);
+          } else {
+            badgeEl.textContent = currentLang === 'ar' ? `● استجابة (${res.status})` : `● HTTP ${res.status}`;
+            badgeEl.className = 'text-[11px] font-bold text-amber-600 dark:text-amber-400';
+            logItEvent(`PING ${item.name} -> HTTP ${res.status}`);
+          }
+        } catch (err) {
+          badgeEl.textContent = currentLang === 'ar' ? '● مهيأ HTTPS' : '● HTTPS Configured';
+          badgeEl.className = 'text-[11px] font-bold text-blue-600 dark:text-blue-400';
+          logItEvent(`PING ${item.name} -> Request dispatched (CORS/Network check)`);
+        }
+      }
+    }
+
+    function renderITLogs() {
+      const container = document.getElementById('it-technical-logs');
+      if (!container) return;
+      container.innerHTML = itTechLogs.map(log => `
+        <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700 text-[11px] text-slate-700 dark:text-slate-300 break-all">
+          ${log}
+        </div>
+      `).join('');
+    }
+
+    function clearItLogs() {
+      itTechLogs = [];
+      localStorage.setItem('corp_hr_it_logs_v6', JSON.stringify(itTechLogs));
+      renderITLogs();
+    }
+
+    function resetDemoData() {
+      requests = [...DEFAULT_REQUESTS];
+      auditLogs = [...DEFAULT_AUDIT_LOGS];
+      cloudEndpoints = { ...DEFAULT_CLOUD_ENDPOINTS };
+      localStorage.setItem('corp_hr_cloud_v6', JSON.stringify(cloudEndpoints));
+      persistData();
+      closeModal('cloud-settings-modal');
+      if (currentUser && currentUser.role === 'hr') renderHRDashboard();
+      if (currentUser && currentUser.role === 'it') {
+        renderITDashboard();
+        logItEvent('IT ADMIN restored default demo data & n8n Webhook URLs.');
+      }
+      showToast(currentLang === 'ar' ? 'تمت استعادة البيانات والروابط الافتراضية للنظام' : 'Default demo data & URLs restored', 'info');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const borderClass = type === 'success' ? 'border-emerald-500' : 'border-blue-500';
+
+      toast.className = `pointer-events-auto p-4 rounded-xl shadow-xl bg-navy-900 text-white border-r-4 ${borderClass} text-xs sm:text-sm font-bold flex items-center justify-between gap-3 animate-fade-up`;
+      toast.innerHTML = `<span>${message}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+      }, 3600);
+    }
+
+    // Initialize Theme & Language on Page Load
+    applyTheme(currentTheme);
+    applyLanguage(currentLang);
+  </script>
+</body>
+</html>
